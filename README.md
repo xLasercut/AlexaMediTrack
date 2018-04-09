@@ -6,7 +6,7 @@
 ### Starting up
 
 - `clone repository`
-- `cd NHSAlexaMed`
+- `cd AlexaMediTrack`
 - `virtualenv .`
 - `source bin/activate`
 - `pip install -r requirements.txt`
