@@ -1,0 +1,37 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "medical tracker",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "MedTakenInfo",
+                    "slots": [],
+                    "samples": [
+                        "medication info"
+                    ]
+                },
+                {
+                    "name": "SetupReminder",
+                    "slots": [],
+                    "samples": [
+                        "set reminder"
+                    ]
+                }
+
+            ],
+            "types": []
+        }
+    }
+}

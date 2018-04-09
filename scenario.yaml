@@ -1,0 +1,25 @@
+first_step: init
+last_step: done
+default_help:
+  - "Sorry I didn't understand that"
+
+
+steps:
+  init:
+    events:
+      launched:
+        next: chooseModule
+
+  chooseModule:
+    reprompt:
+      - "sorry I didn't understand that"
+    help:
+      - "choose module"
+    events:
+      medTakenInfo:
+        next: done
+      setupReminder:
+        next: done
+
+
+  done:
