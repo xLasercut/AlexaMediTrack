@@ -2,7 +2,7 @@
 
 - virtualenv
 - python2
-- (ngrok)[https://ngrok.com/]
+- [ngrok](https://ngrok.com/)
 
 ### Starting up
 
@@ -19,9 +19,9 @@ in another console:
 - `./ngrok http 5000`
 
 
-### Editing Alex Skill
+### Editing Alexa Skill
 
-- go to (alex skill page)[https://developer.amazon.com/alexa/console/ask]
+- go to [alexa skill page](https://developer.amazon.com/alexa/console/ask)
 - create new skill
 - copy and paste everything in `intent_schema.json` in to the JSON editor
 - save and build the Skill
