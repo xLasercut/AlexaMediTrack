@@ -1,45 +1,139 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "meditrack",
+            "invocationName": "medi track",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
-                    "samples": [
-                        "cancel"
-                    ]
+                    "samples": []
                 },
                 {
                     "name": "AMAZON.HelpIntent",
-                    "samples": [
-                        "help"
-                    ]
+                    "samples": []
                 },
                 {
                     "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "MedTakenInfo",
+                    "slots": [],
                     "samples": [
-                        "stop"
+                        "medication info"
                     ]
                 },
                 {
-                    "name": "MedicationInfo",
+                    "name": "SetupReminder",
                     "slots": [],
                     "samples": [
-                        "medication info",
-                        "medication information"
+                        "set reminder"
                     ]
                 },
                 {
-                    "name": "SetupTracker",
-                    "slots": [],
+                    "name": "recordMedication",
+                    "slots": [
+                        {
+                            "name": "MedicationName",
+                            "type": "MedicationNameSlot",
+                            "samples": [
+                                "I had {MedicationName}",
+                                "I took my {MedicationName}",
+                                "{MedicationName}"
+                            ]
+                        },
+                        {
+                            "name": "MedicationTimeframe",
+                            "type": "AMAZON.TIME"
+                        }
+                    ],
                     "samples": [
-                        "setup tracker",
-                        "setup medication tracker",
-                        "setup meditrack"
+                        "Record that I took {MedicationName}",
+                        "Record that I took {MedicationName} for {MedicationTimeframe}",
+                        "Record that I've taken my {MedicationTimeframe} {MedicationName} ",
+                        "Record that I've had my {MedicationTimeframe} {MedicationName}"
                     ]
                 }
             ],
-            "types": []
-        }
+            "types": [
+                {
+                    "name": "MedicationNameSlot",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Painkillers"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Vitamin C"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Paracetamol"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Antihisthamines"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "recordMedication",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.1036009112315"
+                    },
+                    "slots": [
+                        {
+                            "name": "MedicationName",
+                            "type": "MedicationNameSlot",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1036009112315.721476933776"
+                            }
+                        },
+                        {
+                            "name": "MedicationTimeframe",
+                            "type": "AMAZON.TIME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.1036009112315.721476933776",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Which medication did you take?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.1036009112315",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Okay, You want me to record that you took your {MedicationTimeframe} {MedicationName} ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Okay, You want me to remember that you took your {MedicationName} ?"
+                    }
+                ]
+            }
+        ]
     }
 }
