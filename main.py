@@ -26,25 +26,33 @@ def session_ended():
     close_user_session()
     return "", 200
 
+@ask.intent('AMAZON.HelpIntent')
+def help_user():
+    context_help = sup.get_help()
+    # context_help string could be extended with some dynamic information
+    return question(context_help)
 
 @ask.launch
 @sup.guide
 def launched():
     return question(render_template("welcome"))
 
-@ask.intent("MedTakenInfo")
+@ask.intent("MedicationInfo")
 @sup.guide
-def medTakenInfo():
+def choose_medication_info():
+    close_user_session()
     return statement("this is your medication information")
 
-@ask.intent("SetupReminder")
+@ask.intent("SetupTracker")
 @sup.guide
-def setupReminder():
-    return statement("setting up reminder")
+def choose_setup_tracker():
+    tracker_input()
+    return question(render_template("tracker_setup_welcome"))
 
 @sup.guide
-def endEvent():
-    return statement("End of scenario")
+def tracker_input():
+    print("end of scenario")
+
 
 if __name__ == '__main__':
     app.run(debug=True)

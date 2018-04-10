@@ -1,35 +1,43 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "medical tracker",
+            "invocationName": "meditrack",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
-                    "samples": []
+                    "samples": [
+                        "cancel"
+                    ]
                 },
                 {
                     "name": "AMAZON.HelpIntent",
-                    "samples": []
+                    "samples": [
+                        "help"
+                    ]
                 },
                 {
                     "name": "AMAZON.StopIntent",
-                    "samples": []
-                },
-                {
-                    "name": "MedTakenInfo",
-                    "slots": [],
                     "samples": [
-                        "medication info"
+                        "stop"
                     ]
                 },
                 {
-                    "name": "SetupReminder",
+                    "name": "MedicationInfo",
                     "slots": [],
                     "samples": [
-                        "set reminder"
+                        "medication info",
+                        "medication information"
+                    ]
+                },
+                {
+                    "name": "SetupTracker",
+                    "slots": [],
+                    "samples": [
+                        "setup tracker",
+                        "setup medication tracker",
+                        "setup meditrack"
                     ]
                 }
-
             ],
             "types": []
         }

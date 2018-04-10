@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Ben",
+        "medications": {
+            "planned": {
+                "med1": 0,
+                "med2": 2,
+                "med4": 2
+            },
+            "actual": {
+                "med1": 0
+                ...
+            }
+        }
+    }
+]

@@ -1,25 +1,32 @@
 first_step: init
 last_step: done
 default_help:
-  - "Sorry I didn't understand that"
-
+  - "For medication information, say: medication information. For track setup, say: setup tracker"
 
 steps:
   init:
     events:
       launched:
-        next: chooseModule
+        next: choose_module
 
-  chooseModule:
+  choose_module:
     reprompt:
-      - "sorry I didn't understand that"
+      - "sorry I didn't understand that. Please select either: medication information. or. setup tracker"
     help:
-      - "choose module"
+      - "For medication information, say: medication information. To setup tracker, say: setup tracker"
     events:
-      medTakenInfo:
+      choose_medication_info:
         next: done
-      setupReminder:
-        next: done
+      choose_setup_tracker:
+        next: setup_tracker
 
+  setup_tracker:
+    reprompt:
+      - "sorry i didn't understand that."
+    help:
+      - "cheese"
+    events:
+      tracker_input:
+        next: done
 
   done:
