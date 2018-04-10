@@ -4,10 +4,18 @@
             "invocationName": "medi track",
             "intents": [
                 {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
                     "name": "AMAZON.HelpIntent",
                     "samples": [
                         "help"
                     ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
                 },
                 {
                     "name": "medTakenInfo",
@@ -19,35 +27,61 @@
                     ]
                 },
                 {
-                    "name": "trackerSetup",
-                    "slots": [],
-                    "samples": [
-                        "setup tracker",
-                        "tracker setup"
-                    ]
-                },
-                {
                     "name": "recordMedication",
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "MedName",
                             "type": "MedicationNameSlot",
                             "samples": [
-                                "I had {MedicationName}",
-                                "I took my {MedicationName}",
-                                "{MedicationName}"
+                                "I had {MedName}",
+                                "I took my {MedName}",
+                                "{MedName}"
                             ]
                         },
                         {
-                            "name": "MedicationTimeframe",
+                            "name": "MedTimeframe",
                             "type": "AMAZON.TIME"
                         }
                     ],
                     "samples": [
-                        "Record that I took {MedicationName}",
-                        "Record that I took {MedicationName} for {MedicationTimeframe}",
-                        "Record that I've taken my {MedicationTimeframe} {MedicationName} ",
-                        "Record that I've had my {MedicationTimeframe} {MedicationName}"
+                        "Record that I took {MedName}",
+                        "Record that I took {MedName} for {MedTimeframe}",
+                        "Record that I've taken my {MedTimeframe} {MedName} ",
+                        "Record that I've had my {MedTimeframe} {MedName}"
+                    ]
+                },
+                {
+                    "name": "replayMedication",
+                    "slots": [
+                        {
+                            "name": "Date",
+                            "type": "AMAZON.DATE"
+                        }
+                    ],
+                    "samples": [
+                        "what medicines did I take",
+                        "what medicines have I had {Date}",
+                        "What medication have I taken {Date}"
+                    ]
+                },
+                {
+                    "name": "addFromPrescription",
+                    "slots": [
+                        {
+                            "name": "nhsNumber",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "add medications for number {nhsNumber}",
+                        "add medications from my prescription"
+                    ]
+                },
+                {
+                    "name": "addManual",
+                    "slots": [],
+                    "samples": [
+                        "Add a new medicine"
                     ]
                 },
                 {
@@ -133,7 +167,7 @@
                     },
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "MedName",
                             "type": "MedicationNameSlot",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
@@ -142,11 +176,27 @@
                             }
                         },
                         {
-                            "name": "MedicationTimeframe",
+                            "name": "MedTimeframe",
                             "type": "AMAZON.TIME",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "addFromPrescription",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "nhsNumber",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.101083684542.1311694682914"
+                            }
                         }
                     ]
                 }
@@ -167,11 +217,20 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Okay, You want me to record that you took your {MedicationTimeframe} {MedicationName} ?"
+                        "value": "Okay, You want me to record that you took your {MedTimeframe} {MedName} ?"
                     },
                     {
                         "type": "PlainText",
-                        "value": "Okay, You want me to remember that you took your {MedicationName} ?"
+                        "value": "Okay, You want me to record that you took your {MedName} ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.101083684542.1311694682914",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "I'm sorry, please give me your n. h. s. number"
                     }
                 ]
             }
