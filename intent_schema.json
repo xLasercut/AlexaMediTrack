@@ -4,29 +4,26 @@
             "invocationName": "medi track",
             "intents": [
                 {
-                    "name": "AMAZON.CancelIntent",
-                    "samples": []
-                },
-                {
                     "name": "AMAZON.HelpIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.StopIntent",
-                    "samples": []
-                },
-                {
-                    "name": "MedTakenInfo",
-                    "slots": [],
                     "samples": [
-                        "medication info"
+                        "help"
                     ]
                 },
                 {
-                    "name": "SetupReminder",
+                    "name": "medTakenInfo",
                     "slots": [],
                     "samples": [
-                        "set reminder"
+                        "medication taken",
+                        "meds taken",
+                        "med taken"
+                    ]
+                },
+                {
+                    "name": "trackerSetup",
+                    "slots": [],
+                    "samples": [
+                        "setup tracker",
+                        "tracker setup"
                     ]
                 },
                 {

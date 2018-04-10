@@ -4,3 +4,4 @@ lib/
 local/
 share/
 pip-selfcheck.json
+test.py
