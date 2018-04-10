@@ -15,7 +15,7 @@ steps:
     help:
       - "For medication information, say: medication information. To setup tracker, say: setup tracker"
     events:
-      start_tracker_config:
+      add_medication_to_plan:
         next: inputmeds
 
   inputmeds:

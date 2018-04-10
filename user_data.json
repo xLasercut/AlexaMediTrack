@@ -1,17 +1,1 @@
-[
-    {
-        "name": "Ben",
-        "medications": {
-            "planned": {
-                "med1": 0,
-                "med2": 2,
-                "med4": 2
-            },
-            "actual": {
-                "med1": 0,
-                "med2": 2,
-                "med4": 0
-            }
-        }
-    }
-]
+[{"medications": {"actual": {"vitamins": 0, "painkillers": 0}, "planned": {"vitamins": 2, "painkillers": 4}}, "name": "Ben"}]

@@ -1,5 +1,4 @@
 welcome: "Welcome to the alexa medication tracker. \
-For medication information, say: medication information.
-For tracker setup, say: setup tracker"
+For medication information, say: medication taken."
 
-tracker_setup_welcome: "Welcome to meditrack setup. Please say your nhs number to retrieve your medication information"
+ask_for_repeat: "sorry, I didn't understand. Could you repeat the phrase please."

@@ -49,12 +49,56 @@
                         "Record that I've taken my {MedicationTimeframe} {MedicationName} ",
                         "Record that I've had my {MedicationTimeframe} {MedicationName}"
                     ]
+                },
+                {
+                    "name": "addMedToPlan",
+                    "slots": [
+                        {
+                            "name": "MedicationName",
+                            "type": "MedicationNameSlot"
+                        },
+                        {
+                            "name": "MedicationAmount",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "add {MedicationAmount} of {MedicationName} to plan"
+                    ]
+                },
+                {
+                    "name": "removeMedFromPlan",
+                    "slots": [
+                        {
+                            "name": "MedicationName",
+                            "type": "MedicationNameSlot"
+                        }
+                    ],
+                    "samples": [
+                        "remove {MedicationName} from plan"
+                    ]
+                },
+                {
+                    "name": "listMedFromPlan",
+                    "slots": [],
+                    "samples": [
+                        "my med list",
+                        "my medication list",
+                        "show me meds list",
+                        "show me medication list",
+                        "show me med list"
+                    ]
                 }
             ],
             "types": [
                 {
                     "name": "MedicationNameSlot",
                     "values": [
+                        {
+                            "name": {
+                                "value": "Vitamins"
+                            }
+                        },
                         {
                             "name": {
                                 "value": "Painkillers"
