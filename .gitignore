@@ -3,5 +3,6 @@ include/
 lib/
 local/
 share/
+userdata/
 pip-selfcheck.json
 test.py

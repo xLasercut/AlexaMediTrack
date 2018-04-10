@@ -1,0 +1,37 @@
+{
+  "9999123456" :
+  {
+    "medications" : [
+      {
+        "name" : "dried frog pills",
+        "dosage" : "4",
+        "daysSupply" : "40"
+      },
+      {
+        "name" : "Aufero capitis",
+        "dosage" : "4",
+        "daysSupply" : "20"
+      },
+      {
+        "name" : "illum turgentis sanie caput remedium",
+        "dosage" : "2",
+        "daysSupply" : "14"
+      }
+    ]
+  },
+  "9999654321" :
+  {
+    "medications" : [
+      {
+        "name" : "Aufero capitis",
+        "dosage" : "4",
+        "daysSupply" : "28"
+      },
+      {
+        "name" : "nolite sternumenta",
+        "dosage" : "8",
+        "daysSupply" : "40"
+      }
+    ]
+  }
+}

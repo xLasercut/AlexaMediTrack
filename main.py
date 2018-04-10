@@ -5,13 +5,14 @@ from flask import Flask, render_template, jsonify
 from flask_ask import Ask, statement, question, session, convert_errors
 from afg import Supervisor
 import json
+from importdata.prescriptions import PrescriptionFinder
+from importdata.spineproxy import FakeSpineProxy
+from datasource import UserDataSource
+from alexareader import UserDataReader
 
 app = Flask("MedTracker")
 ask = Ask(app, '/')
 sup = Supervisor("scenario.yaml")
-
-
-
 
 @ask.on_session_started
 @sup.start
@@ -65,6 +66,12 @@ def medication_taken_info():
     close_user_session()
     return statement(output_msg)
 
+def _getMedicationTaken(userId):
+    dataSource = UserDataSource()
+    finder = PrescriptionFinder(FakeSpineProxy(), dataSource)
+    dailyDosages = dataSource.load(userId)
+
+    return UserDataReader().readTakenDosages(dailyDosages)
 
 if __name__ == '__main__':
     app.run(debug=True)
