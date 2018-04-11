@@ -19,7 +19,6 @@ ask = Ask(app, '/')
 
 USER_DATA_PATH = "user_data.json"
 
-
 @ask.on_session_started
 def newSession():
     app.logger.debug('new user session started')
@@ -172,6 +171,12 @@ def listMedFromPlan():
         return statement("Your medications list: %s" %(" ".join(medList)))
     else:
         return statement("Your medications list is empty")
+
+
+@ask.intent("recordMedication")
+def recordmeds(MedicationName):
+    timestamp =  datetime.datetime.now()
+    return statement("You took " + MedicationName + " AT "+ str(request.timestamp.strftime("%I:%M %p")))
 
 
 if __name__ == '__main__':
