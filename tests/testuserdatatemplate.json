@@ -1,11 +1,10 @@
 {
-  "userId": "9999123456",
-  "plannedMedication" :
-{
-	"date": "20180412",
+ 	"{{date}}" : {
+  	"userId": "{{userId}}",
+	"date" : "{{date}}",
 	"timeSlots": [{
 		"name": "EarlyAM",
-		"taken": "20180412084420",
+		"taken": "{{date}}084420",
 		"medications": [{
 			"name": "dried frog pills",
 			"dose": "1"
@@ -13,7 +12,7 @@
 	},
 	{
 		"name": "LateAM",
-		"taken": "20180412124420",
+		"taken": "{{date}}084420",
 		"medications": [{
 			"name": "dried frog pills",
 			"dose": "1"
@@ -44,7 +43,8 @@
 		}]
 	}]
 },
- "history" : {
+"20180409" : {
+  	"userId": "{{userId}}",
 	"date": "20180410",
 	"timeSlots": [{
 		"name": "EarlyAM",

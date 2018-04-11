@@ -4,18 +4,24 @@
     "medications" : [
       {
         "name" : "dried frog pills",
-        "dosage" : "4",
-        "daysSupply" : "40"
+        "dailyDosage" : 4,
+        "interval" : 4,
+        "dosage" : 1,
+        "daysSupply" : 40
       },
       {
         "name" : "Aufero capitis",
-        "dosage" : "4",
-        "daysSupply" : "20"
+        "dailyDosage" : 4,
+        "interval" : 2,
+        "dosage" : 1,
+        "daysSupply" : 20
       },
       {
         "name" : "illum turgentis sanie caput remedium",
-        "dosage" : "2",
-        "daysSupply" : "14"
+        "dailyDosage" : 1,
+        "interval" : 8,
+        "dosage" : 1,
+        "daysSupply" : 14
       }
     ]
   },
@@ -24,13 +30,17 @@
     "medications" : [
       {
         "name" : "Aufero capitis",
-        "dosage" : "4",
-        "daysSupply" : "28"
+        "dailyDosage" : 4,
+        "interval" : 2,
+        "dosage" : 1,
+        "daysSupply" : 28
       },
       {
         "name" : "nolite sternumenta",
-        "dosage" : "8",
-        "daysSupply" : "40"
+        "dailyDosage" : 8,
+        "interval" : 4,
+        "dosage" : 2,
+        "daysSupply" : 40
       }
     ]
   }
