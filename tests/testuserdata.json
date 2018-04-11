@@ -1,0 +1,90 @@
+{
+  "userId": "9999123456",
+  "plannedMedication" :
+{
+	"date": "20180412",
+	"timeSlots": [{
+		"name": "EarlyAM",
+		"taken": "20180412084420",
+		"medications": [{
+			"name": "dried frog pills",
+			"dose": "1"
+		}]
+	},
+	{
+		"name": "LateAM",
+		"taken": "20180412124420",
+		"medications": [{
+			"name": "dried frog pills",
+			"dose": "1"
+		},
+		{
+			"name": "Aufero capitis",
+			"dose": "1"
+		}]
+	},
+	{
+		"name": "EarlyPM",
+		"taken": "None",
+		"medications": [{
+			"name": "dried frog pills",
+			"dose": "1"
+		}]
+	},
+	{
+		"name": "LatePM",
+		"taken": "None",
+		"medications": [{
+			"name": "dried frog pills",
+			"dose": "1"
+		},
+		{
+			"name": "Aufero capitis",
+			"dose": "1"
+		}]
+	}]
+},
+ "history" : {
+	"date": "20180410",
+	"timeSlots": [{
+		"name": "EarlyAM",
+		"taken": "20180410084420",
+		"medications": [{
+			"name": "dried frog pills",
+			"dose": "1"
+		}]
+	},
+	{
+		"name": "LateAM",
+		"taken": "20180410124420",
+		"medications": [{
+			"name": "dried frog pills",
+			"dose": "1"
+		},
+		{
+			"name": "Aufero capitis",
+			"dose": "1"
+		}]
+	},
+	{
+		"name": "EarlyPM",
+		"taken": "20180410154420",
+		"medications": [{
+			"name": "dried frog pills",
+			"dose": "1"
+		}]
+	},
+	{
+		"name": "LatePM",
+		"taken": "None",
+		"medications": [{
+			"name": "dried frog pills",
+			"dose": "1"
+		},
+		{
+			"name": "Aufero capitis",
+			"dose": "1"
+		}]
+	}]
+}
+}
