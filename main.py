@@ -73,6 +73,11 @@ def generateNewUserData(userId):
                 "name": "late pm",
                 "taken": "None",
                 "medications": []
+            },
+            {
+                "name": "other",
+                "taken": "None",
+                "medications": []
             }
         ]
     }
@@ -84,19 +89,19 @@ def getUserData(filePath, userId):
     Get user data for a single user by <userId>
     - will create new user if existing user with <userId> does not exist
     """
-    #try:
-    with open(filePath, "r") as userDataFile:
-        users = json.load(userDataFile)
-    for user in users:
-        if user["userId"] == userId:
-            return user
+    try:
+        with open(filePath, "r") as userDataFile:
+            users = json.load(userDataFile)
+        for user in users:
+            if user["userId"] == userId:
+                return user
 
-    newUserData = generateNewUserData(userId)
-    writeUserData(filePath, newUserData)
-    return newUserData
-    #except:
-    #    closeUserSession()
-    #    print "error getting user data"
+        newUserData = generateNewUserData(userId)
+        writeUserData(filePath, newUserData)
+        return newUserData
+    except:
+        closeUserSession()
+        print "error getting user data"
 
 def writeUserData(filePath, userData):
     """
