@@ -56,27 +56,22 @@ def generateNewUserData(userId):
         "timeSlots": [
             {
                 "name": "early am",
-                "taken": "None",
                 "medications": []
             },
             {
                 "name": "late am",
-                "taken": "None",
                 "medications": []
             },
             {
                 "name": "early pm",
-                "taken": "None",
                 "medications": []
             },
             {
                 "name": "late pm",
-                "taken": "None",
                 "medications": []
             },
             {
                 "name": "other",
-                "taken": "None",
                 "medications": []
             }
         ]
@@ -135,20 +130,33 @@ def medicationTakenInfo():
     """
     Returns the amount of medication taken
     """
-    medsTaken = []
+    medInfo = []
     userId = context.System.device.deviceId
     userData = getUserData(USER_DATA_PATH, userId)
     for slot in userData["timeSlots"]:
-        if slot["taken"] != "None" and len(slot["medications"]) > 0:
-            medsTaken.append("You have taken your dose for %s, containing:" %(slot["name"]))
-        elif slot["taken"] == "None" and len(slot["medications"]) > 0:
-            medsTaken.append("You have yet to take your dose for %s, containing:" %(slot["name"]))
-        for medication in slot["medications"]:
-            medsTaken.append("%i dose of %s." %(medication["dose"], medication["name"]))
-
+        if len(slot["medications"]) > 0:
+            slotInfo = {
+                "timeSlot": slot["name"],
+                "taken": [],
+                "notTaken": []
+            }
+            for medication in slot["medications"]:
+                if medication["taken"] != "None":
+                    slotInfo["taken"].append("%i of %s." %(medication["dose"], medication["name"]))
+                else:
+                    slotInfo["notTaken"].append("%i of %s." %(medication["dose"], medication["name"]))
+            medInfo.append(slotInfo)
     closeUserSession()
-    if len(medsTaken) > 0:
-        return statement(" ".join(medsTaken))
+    if len(medInfo) > 0:
+        msgOut = []
+        for item in medInfo:
+            if len(item["notTaken"]) == 0:
+                msgOut.append("You have taken your %s dose, containing: %s" %(item["timeSlot"], " ".join(item["taken"])))
+            elif len(item["taken"]) == 0:
+                msgOut.append("You have yet to take your %s dose, containing: %s" %(item["timeSlot"], " ".join(item["notTaken"])))
+            else:
+                msgOut.append("For your %s dose, you have taken: %s you have yet to take: %s." %(item["timeSlot"], " ".join(item["taken"]), " ".join(item["notTaken"])))
+        return statement(" ".join(msgOut))
     else:
         return statement("Your medications list is empty")
 
@@ -177,6 +185,7 @@ def addMedToPlan(medicationName, dose, timeSlot):
                 if match == False:
                     medData = {
                         "name": medicationName,
+                        "taken": "None",
                         "dose": dose
                     }
                     slot["medications"].append(medData)
