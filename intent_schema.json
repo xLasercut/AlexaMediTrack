@@ -54,28 +54,37 @@
                     "name": "addMedToPlan",
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "medicationName",
                             "type": "MedicationNameSlot"
                         },
                         {
-                            "name": "MedicationAmount",
+                            "name": "dose",
                             "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "timeSlot",
+                            "type": "MedTimeSlot"
                         }
                     ],
                     "samples": [
-                        "add {MedicationAmount} of {MedicationName} to plan"
+                        "add {dose} of {medicationName} to {timeSlot}",
+                        "add {dose} dose of {medicationName} to {timeSlot}"
                     ]
                 },
                 {
                     "name": "removeMedFromPlan",
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "medicationName",
                             "type": "MedicationNameSlot"
+                        },
+                        {
+                            "name": "timeSlot",
+                            "type": "MedTimeSlot"
                         }
                     ],
                     "samples": [
-                        "remove {MedicationName} from plan"
+                        "remove {medicationName} from {timeSlot}"
                     ]
                 },
                 {
@@ -117,6 +126,31 @@
                         {
                             "name": {
                                 "value": "Antihisthamines"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "MedTimeSlot",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "late pm"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "early pm"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "late am"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "early am"
                             }
                         }
                     ]
