@@ -13,7 +13,7 @@ class TestPrescriptionFinder(unittest.TestCase):
         result = finder.getPrescriptions(userId)
 
         self.assertEquals(result.userId, userId)
-        self.assertEquals(len(result.timeSlots), 4)
+        self.assertEquals(len(result.timeSlots), 5)
         self.assertEquals(result.date, datetime.now().strftime("%Y%m%d"))
 
         for slot in result.timeSlots:

@@ -111,10 +111,12 @@ class TimeSlices(object):
             cls.EARLY_AM,
             cls.LATE_AM,
             cls.EARLY_PM,
-            cls.LATE_PM
+            cls.LATE_PM,
+            cls.OTHER
         ]
 
     EARLY_AM = "Early AM"
     LATE_AM = "Late AM"
     EARLY_PM = "Early PM"
     LATE_PM = "Late PM"
+    OTHER = "Other"
