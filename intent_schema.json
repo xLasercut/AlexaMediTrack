@@ -39,7 +39,7 @@
                         }
                     ],
                     "samples": [
-                        "Record that I've had P {medicationName}",
+                        "Record that I've had {medicationName}",
                         "Record that I've taken {medicationName}",
                         "Record that I took {medicationName}",
                         "Record that I took {medicationName} for {timeSlot}",
