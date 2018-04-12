@@ -3,25 +3,18 @@
   {
     "medications" : [
       {
-        "name" : "dried frog pills",
-        "dailyDosage" : 4,
+        "name" : "paracetamol",
+        "dailyDosage" : 2,
         "interval" : 4,
         "dosage" : 1,
         "daysSupply" : 40
       },
       {
-        "name" : "Aufero capitis",
+        "name" : "vitamin a",
         "dailyDosage" : 4,
         "interval" : 2,
         "dosage" : 1,
         "daysSupply" : 20
-      },
-      {
-        "name" : "illum turgentis sanie caput remedium",
-        "dailyDosage" : 1,
-        "interval" : 8,
-        "dosage" : 1,
-        "daysSupply" : 14
       }
     ]
   },
