@@ -7,6 +7,9 @@ class UserDataReader(object):
         medTaken = userData.getAllMedicationTaken()
         medNotTaken = userData.getAllMedicationNotTaken()
 
+        print medTaken
+        print medNotTaken
+
         if medTaken is None:
             for slot in medNotTaken:
                 medInfo.append("You have yet to take %s dose, containing:" %(slot["name"]))
