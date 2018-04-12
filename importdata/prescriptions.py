@@ -126,10 +126,11 @@ class PrescriptionFinder(object):
 
         slots = []
         for slotName in slotNames:
-            slot = {}
-            slot['name'] = slotName
-            slot['medications'] = []
-            slots.append(slot)
+            if slotName != "other":
+                slot = {}
+                slot['name'] = slotName
+                slot['medications'] = []
+                slots.append(slot)
 
         return slots
 
