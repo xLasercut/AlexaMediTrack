@@ -6,3 +6,5 @@ share/
 userdata/
 pip-selfcheck.json
 test.py
+*.pyc
+tests/*.pyc

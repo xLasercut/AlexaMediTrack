@@ -24,7 +24,7 @@ class MainTests(unittest.TestCase):
 
     def _setupSource(self, date, userId):
         data = None
-        target = self.SAVE_FOLDER + "//" + userId + ".json"
+        target = os.path.join(self.SAVE_FOLDER,  userId + ".json")
         with open(self.TEST_DATA_FILE, "r") as file:
             data = file.read()
 

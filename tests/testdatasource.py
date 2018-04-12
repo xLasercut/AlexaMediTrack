@@ -24,33 +24,35 @@ class TestUserDataSource(unittest.TestCase):
         },
             {
                 "name": "LateAM",
-                "taken": "20180410124420",
                 "medications": [{
                     "name": "dried frog pills",
+                    "taken": "20180410124420",
                     "dose": "1"
                 },
                     {
                         "name": "Aufero capitis",
+                        "taken": "20180410124420",
                         "dose": "1"
                     }]
             },
             {
                 "name": "EarlyPM",
-                "taken": "20180410154420",
                 "medications": [{
                     "name": "dried frog pills",
+                    "taken": "20180410154420",
                     "dose": "1"
                 }]
             },
             {
                 "name": "LatePM",
-                "taken": "None",
                 "medications": [{
                     "name": "dried frog pills",
+                    "taken": "None",
                     "dose": "1"
                 },
                     {
                         "name": "Aufero capitis",
+                        "taken": "None",
                         "dose": "1"
                     }]
             }]}
@@ -82,7 +84,7 @@ class TestUserDataSource(unittest.TestCase):
 
     def _setupSource(self, date, userId):
         data = None
-        targetPath = self.SAVE_FOLDER + "/" + userId + ".json"
+        targetPath = os.path.join(self.SAVE_FOLDER, userId + ".json")
         with open(self.TEST_DATA_FILE, "r") as file:
             data = file.read()
 

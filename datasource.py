@@ -47,7 +47,7 @@ class UserDataSource(object):
             os.mkdir(self.DATA_STORE)
 
     def _getFilePath(self, userId):
-        return self.DATA_STORE + "/" + userId + '.json'
+        return os.path.join(self.DATA_STORE, userId + '.json')
 
 
 class UserIdMapping(object):
