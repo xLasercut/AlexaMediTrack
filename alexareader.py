@@ -2,25 +2,6 @@ from importdata.prescriptions import DailyDosage
 
 class UserDataReader(object):
 
-    def readTakenDosages(self, takenMedication):
-        textToRead = "today you have taken. "
-
-        if len(takenMedication) > 0:
-            msgOut = []
-            for item in takenMedication:
-                if len(item["notTaken"]) == 0:
-                    msgOut.append(
-                        "You have taken your %s dose, containing: %s" % (item["timeSlot"], " ".join(item["taken"])))
-                elif len(item["taken"]) == 0:
-                    msgOut.append("You have yet to take your %s dose, containing: %s" % (
-                    item["timeSlot"], " ".join(item["notTaken"])))
-                else:
-                    msgOut.append("For your %s dose, you have taken: %s you have yet to take: %s." % (
-                    item["timeSlot"], " ".join(item["taken"]), " ".join(item["notTaken"])))
-            return " ".join(msgOut)
-        else:
-            return "Your medications list is empty"
-
     def readCurrentStatus(self, userData):
         medInfo = []
 
