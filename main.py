@@ -99,7 +99,7 @@ def addMedToPlan(medicationName, dose, timeSlot):
         userData = getUserData(userId)
         medicationName = sanitizeInputs(medicationName)
         medicationData = userData.getMedication(timeSlot, medicationName)
-        if medicationData is None:
+        if not medicationData:
             medicationData = {
                 "name": medicationName,
                 "taken": None,
@@ -133,13 +133,13 @@ def listMedFromPlan():
     userData = getUserData(userId)
     medList = []
     for slot in userData.timeSlots:
-        if len(slot["medications"]) > 0:
-            medList.append("%s slot contains:" %(slot["name"]))
+        if slot["medications"]:
+            medList.append("{} slot contains:".format(slot["name"]))
         for medication in slot["medications"]:
-            medList.append("%i dose of %s" %(medication["dose"], medication["name"]))
+            medList.append("{} dose of {}".format(medication["dose"], medication["name"]))
 
-    if len(medList) > 0:
-        return statement("Your medications list: %s" %(" ".join(medList)))
+    if medList:
+        return statement("Your medications list: {}".format(" ".join(medList)))
     else:
         return statement("Your medications list is empty")
 
@@ -157,7 +157,7 @@ def recordmeds(medicationName):
         medicationName = sanitizeInputs(medicationName)
         timeSlot = determineTimeSlot(timestamp)
         medicationData = userData.getMedication(timeSlot, medicationName)
-        if medicationData is None:
+        if not medicationData:
             medicationData = {
                 "name": medicationName,
                 "taken": timestampString,
