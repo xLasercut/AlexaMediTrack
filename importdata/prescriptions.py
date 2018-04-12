@@ -21,8 +21,9 @@ class DailyDosage(object):
 
     def takeMedication(self, timeslot):
         for slot in self.timeSlots:
-            if slot['name'] == timeslot and not slot['taken']:
-                slot['taken'] = datetime.now().strftime("%Y%m%d-%H%M%S")
+            if slot['name'] == timeslot:
+                for medication in slot["medication"]:
+                    medication['taken'] = datetime.now().strftime("%Y%m%d-%H%M%S")
                 break
 
         self.updateState()
@@ -74,6 +75,7 @@ class PrescriptionFinder(object):
         for i, dosage in enumerate(distibution):
             timeSlots[i]['medication'].append({
                 'name' : prescription[SpineProxy.NAME_KEY],
+                'taken': None,
                 'dose' : dosage
             })
 
@@ -84,8 +86,7 @@ class PrescriptionFinder(object):
         for slotName in slotNames:
             slot = {}
             slot['name'] = slotName
-            slot['taken'] = None
-            slot['medication'] = []
+            slot['medications'] = []
             slots.append(slot)
 
         return slots
