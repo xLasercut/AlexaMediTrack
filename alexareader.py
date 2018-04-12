@@ -66,7 +66,7 @@ class AlexaInputSanitizer(object):
     ]
 
     def sanitizeInputs(self, inputString):
-        for item in SANITIZE_DATA:
+        for item in self.SANITIZE_DATA:
             if inputString.strip() in item["synonyms"]:
                 return item["actualValue"]
         return inputString
