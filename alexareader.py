@@ -6,7 +6,7 @@ class UserDataReader(object):
         if dose > 1:
             return "doses"
         else:
-            return dose
+            return "dose"
 
     def readCurrentStatus(self, userData):
         medInfo = []

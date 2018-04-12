@@ -11,7 +11,7 @@ import datetime
 from datasource import UserDataSource, UserIdMapping
 from importdata.prescriptions import PrescriptionFinder, DailyDosage
 from importdata.spineproxy import FakeSpineProxy
-from alexareader import UserDataReader
+from alexareader import UserDataReader, getDoseString
 
 #logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
@@ -108,7 +108,7 @@ def addMedToPlan(medicationName, dose, timeSlot):
         else:
             medicationData['dose'] += dose
         userData.updateMedication(timeSlot, medicationName, medicationData)
-        return statement("Added {} {} of {} to {}".format(dose, alexaReader.getDoseString(dose), medicationName, timeSlot))
+        return statement("Added {} {} of {} to {}".format(dose, getDoseString(dose), medicationName, timeSlot))
 
 @ask.intent("removeMedFromPlan", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def removeMedFromPlan(medicationName, timeSlot):
@@ -136,7 +136,7 @@ def listMedFromPlan():
         if slot["medications"]:
             medList.append("{} slot contains:".format(slot["name"]))
         for medication in slot["medications"]:
-            medList.append("{} {} of {}".format(medication["dose"], alexaReader.getDoseString(medication["dose"]), medication["name"]))
+            medList.append("{} {} of {}".format(medication["dose"], getDoseString(medication["dose"]), medication["name"]))
 
     if medList:
         return statement("Your medications list: {}".format(" ".join(medList)))
