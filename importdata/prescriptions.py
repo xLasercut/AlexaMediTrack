@@ -114,6 +114,7 @@ class PrescriptionFinder(object):
     def _addDosage(self, prescription, timeSlots):
         dailyDosage = prescription[SpineProxy.DOSAGE_KEY]
         distibution = self._getDistribution(dailyDosage, len(timeSlots))
+        print distibution
         for i, dosage in enumerate(distibution):
             timeSlots[i]['medications'].append({
                 'name' : prescription[SpineProxy.NAME_KEY],
@@ -126,11 +127,10 @@ class PrescriptionFinder(object):
 
         slots = []
         for slotName in slotNames:
-            if slotName != "other":
-                slot = {}
-                slot['name'] = slotName
-                slot['medications'] = []
-                slots.append(slot)
+            slot = {}
+            slot['name'] = slotName
+            slot['medications'] = []
+            slots.append(slot)
 
         return slots
 
@@ -159,8 +159,8 @@ class TimeSlices(object):
             cls.OTHER
         ]
 
-    EARLY_AM = "early am"
-    LATE_AM = "late am"
-    EARLY_PM = "early pm"
-    LATE_PM = "late pm"
+    EARLY_AM = "early AM"
+    LATE_AM = "late AM"
+    EARLY_PM = "early PM"
+    LATE_PM = "late PM"
     OTHER = "other"
