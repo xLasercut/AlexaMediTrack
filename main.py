@@ -11,6 +11,7 @@ import datetime
 from datasource import UserDataSource, UserIdMapping
 from importdata.prescriptions import PrescriptionFinder, DailyDosage
 from importdata.spineproxy import FakeSpineProxy
+from alexareader import UserDataReader
 
 #logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
@@ -79,35 +80,11 @@ def medicationTakenInfo():
     """
     Returns the amount of medication taken
     """
-    medInfo = []
     userId = context.System.device.deviceId
+    alexaReader = UserDataReader()
+
     userData = getUserData(userId)
-    for slot in userData.timeSlots:
-        if len(slot["medications"]) > 0:
-            slotInfo = {
-                "timeSlot": slot["name"],
-                "taken": [],
-                "notTaken": []
-            }
-            for medication in slot["medications"]:
-                if medication["taken"] != "None":
-                    slotInfo["taken"].append("%i of %s." %(medication["dose"], medication["name"]))
-                else:
-                    slotInfo["notTaken"].append("%i of %s." %(medication["dose"], medication["name"]))
-            medInfo.append(slotInfo)
-    closeUserSession()
-    if len(medInfo) > 0:
-        msgOut = []
-        for item in medInfo:
-            if len(item["notTaken"]) == 0:
-                msgOut.append("You have taken your %s dose, containing: %s" %(item["timeSlot"], " ".join(item["taken"])))
-            elif len(item["taken"]) == 0:
-                msgOut.append("You have yet to take your %s dose, containing: %s" %(item["timeSlot"], " ".join(item["notTaken"])))
-            else:
-                msgOut.append("For your %s dose, you have taken: %s you have yet to take: %s." %(item["timeSlot"], " ".join(item["taken"]), " ".join(item["notTaken"])))
-        return statement(" ".join(msgOut))
-    else:
-        return statement("Your medications list is empty")
+    return statement(alexaReader.readCurrentStatus(userData))
 
 @ask.intent("addMedToPlan", convert={"dose": int, "medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def addMedToPlan(medicationName, dose, timeSlot):
