@@ -114,7 +114,7 @@ class PrescriptionFinder(object):
     def _addDosage(self, prescription, timeSlots):
         dailyDosage = prescription[SpineProxy.DAILY_DOSAGE_KEY]
         dosagePerSlot = prescription[SpineProxy.DOSAGE_KEY]
-        for i in len(timeSlots):
+        for i in range(0,len(timeSlots)):
             if dailyDosage > 0:
                 timeSlots[i]['medications'].append({
                     'name' : prescription[SpineProxy.NAME_KEY],
