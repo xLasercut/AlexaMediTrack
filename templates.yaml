@@ -1,4 +1,12 @@
-welcome: "Welcome to the alexa medication tracker. \
-For medication information, say: medication taken."
+welcome: |
+    "Welcome to the alexa medication tracker. \
+    For medication information, say: medication taken."
 
-ask_for_repeat: "sorry, I didn't understand. Could you repeat the phrase please."
+help: "Some help message here"
+
+ask_for_repeat: "I'm sorry, I didn't quite understand. Could you repeat that?"
+
+dosage_added: "Okay, I'll add {{ dosenumber }} {{ dosestring }} of {{ medicationname }} to your {{ timeslot }} medications"
+dosage_removed: "Okay, I'll remove {{ medicationname }} from your {{ timeslot }} medications"
+medication_name_taken: "Okay, I'll record that you've taken a dosage of {{ medicationname }} from your {{ timeslot }} medications"
+medication_timeslot_taken: "Okay, I'll record that you've taken all of your {{ timeslot }} medications"
