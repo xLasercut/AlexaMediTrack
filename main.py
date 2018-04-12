@@ -11,7 +11,7 @@ import datetime
 from datasource import UserDataSource, UserIdMapping
 from importdata.prescriptions import PrescriptionFinder, DailyDosage
 from importdata.spineproxy import FakeSpineProxy
-from alexareader import UserDataReader
+from alexareader import UserDataReader, AlexaInputSanitizer
 
 #logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
@@ -38,9 +38,6 @@ def closeUserSession():
 def sessionEnded():
     closeUserSession()
     return "", 200
-
-def sanitizeInputs(inputString):
-    return inputString.lower().strip()
 
 def getDoseString(dose):
     if dose > 1:
@@ -103,7 +100,9 @@ def addMedToPlan(medicationName, dose, timeSlot):
     else:
         userId = context.System.device.deviceId
         userData = getUserData(userId)
-        medicationName = sanitizeInputs(medicationName)
+        sanitizer = AlexaInputSanitizer()
+        medicationName = sanitizer.sanitizeInputs(medicationName)
+        timeSlot = sanitizer.sanitizeInputs(timeSlot)
         medicationData = userData.getMedication(timeSlot, medicationName)
         if not medicationData:
             medicationData = {
@@ -126,7 +125,9 @@ def removeMedFromPlan(medicationName, timeSlot):
     else:
         userId = context.System.device.deviceId
         userData = getUserData(userId)
-        medicationName = sanitizeInputs(medicationName)
+        sanitizer = AlexaInputSanitizer()
+        medicationName = sanitizer.sanitizeInputs(medicationName)
+        timeSlot = sanitizer.sanitizeInputs(timeSlot)
         userData.removeMedication(timeSlot, medicationName)
         return statement("removed {} from {} slot".format(medicationName, timeSlot))
 
@@ -160,9 +161,12 @@ def recordmeds(medicationName, timeSlot):
     else:
         userId = context.System.device.deviceId
         userData = getUserData(userId)
-        medicationName = sanitizeInputs(medicationName)
+        sanitizer = AlexaInputSanitizer()
+        medicationName = sanitizer.sanitizeInputs(medicationName)
         if not timeSlot:
             timeSlot = determineTimeSlot(timestamp)
+        else:
+            timeSlot = sanitizer.sanitizeInputs(timeSlot)
         medicationData = userData.getMedication(timeSlot, medicationName)
         if not medicationData:
             medicationData = {

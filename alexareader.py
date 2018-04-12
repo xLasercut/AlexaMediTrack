@@ -39,3 +39,34 @@ class UserDataReader(object):
             return "Your medication list is empty"
 
         return " ".join(medInfo)
+
+class AlexaInputSanitizer(object):
+
+    SANITIZE_DATA = [
+        {
+            "synonyms": ["early am", "early a.m.", "early A.M."],
+            "actualValue": "early AM"
+        },
+        {
+            "synonyms": ["early pm", "early p.m.", "early P.M."],
+            "actualValue": "early PM"
+        },
+        {
+            "synonyms": ["late am", "late a.m.", "late A.M."],
+            "actualValue": "late AM"
+        },
+        {
+            "synonyms": ["late pm", "late p.m.", "late P.M."],
+            "actualValue": "late PM"
+        },
+        {
+            "synonyms": ["others"],
+            "actualValue": "other"
+        }
+    ]
+
+    def sanitizeInputs(self, inputString):
+        for item in SANITIZE_DATA:
+            if inputString.strip() in item["synonyms"]:
+                return item["actualValue"]
+        return inputString
