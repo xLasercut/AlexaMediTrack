@@ -73,7 +73,7 @@ class PrescriptionFinder(object):
         dailyDosage = prescription[SpineProxy.DOSAGE_KEY]
         distibution = self._getDistribution(dailyDosage, len(timeSlots))
         for i, dosage in enumerate(distibution):
-            timeSlots[i]['medication'].append({
+            timeSlots[i]['medications'].append({
                 'name' : prescription[SpineProxy.NAME_KEY],
                 'taken': None,
                 'dose' : dosage
@@ -86,6 +86,7 @@ class PrescriptionFinder(object):
         for slotName in slotNames:
             slot = {}
             slot['name'] = slotName
+            slot['taken'] = None
             slot['medications'] = []
             slots.append(slot)
 
