@@ -4,7 +4,7 @@
     "medications" : [
       {
         "name" : "paracetamol",
-        "dailyDosage" : 2,
+        "dailyDosage" : 4,
         "interval" : 4,
         "dosage" : 1,
         "daysSupply" : 40
