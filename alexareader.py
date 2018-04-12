@@ -4,33 +4,29 @@ class UserDataReader(object):
 
     def readCurrentStatus(self, userData):
         medInfo = []
+        medTaken = userData.getAllMedicationTaken()
+        medNotTaken = userData.getAllMedicationNotTaken()
 
-        for slot in userData.timeSlots:
-            if len(slot["medications"]) > 0:
-                slotInfo = {
-                    "timeSlot": slot["name"],
-                    "taken": [],
-                    "notTaken": []
-                }
+        if medTaken is None:
+            for slot in medNotTaken:
+                medInfo.append("You have yet to take %s dose, containing:" %(slot["name"]))
                 for medication in slot["medications"]:
-                    if medication["taken"] != "None":
-                        slotInfo["taken"].append("%i of %s." % (medication["dose"], medication["name"]))
-                    else:
-                        slotInfo["notTaken"].append("%i of %s." % (medication["dose"], medication["name"]))
-                medInfo.append(slotInfo)
-
-        if len(medInfo) > 0:
-            msgOut = []
-            for item in medInfo:
-                if len(item["notTaken"]) == 0:
-                    msgOut.append(
-                        "You have taken your %s dose, containing: %s" % (item["timeSlot"], " ".join(item["taken"])))
-                elif len(item["taken"]) == 0:
-                    msgOut.append("You have yet to take your %s dose, containing: %s" % (
-                    item["timeSlot"], " ".join(item["notTaken"])))
-                else:
-                    msgOut.append("For your %s dose, you have taken: %s you have yet to take: %s." % (
-                    item["timeSlot"], " ".join(item["taken"]), " ".join(item["notTaken"])))
-            return " ".join(msgOut)
+                    medInfo.append("%i dose of %s." %(medication["dose"], medication["name"]))
+        elif medNotTaken is None:
+            for slot in medTaken:
+                medInfo.append("You have taken %s dose, containing:" %(slot["name"]))
+                for medication in slot["medications"]:
+                    medInfo.append("%i dose of %s." %(medication["dose"], medication["name"]))
+        elif medTaken and medNotTaken:
+            for slot in medTaken:
+                medInfo.append("For %s dose, you have taken:" %(slot["name"]))
+                for medication in slot["medications"]:
+                    medInfo.append("%i dose of %s." %(medication["dose"], medication["name"]))
+            for slot in medNotTaken:
+                medInfo.append("For %s dose, you have yet to take:" %(slot["name"]))
+                for medication in slot["medications"]:
+                    medInfo.append("%i dose of %s." %(medication["dose"], medication["name"]))
         else:
-            return "Your medications list is empty"
+            return "Your medication list is empty"
+
+        return " ".join(medInfo)

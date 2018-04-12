@@ -20,10 +20,10 @@ ask = Ask(app, '/')
 
 USER_DATA_PATH = "user_data.json"
 
-EARLY_AM_SLOT = "Early AM"
-EARLY_PM_SLOT = "Early PM"
-LATE_AM_SLOT = "Late AM"
-LATE_PM_SLOT = "Late AM"
+EARLY_AM_SLOT = "early am"
+EARLY_PM_SLOT = "early pm"
+LATE_AM_SLOT = "late am"
+LATE_PM_SLOT = "late pm"
 
 @ask.on_session_started
 def newSession():
@@ -40,7 +40,7 @@ def sessionEnded():
     return "", 200
 
 def sanitizeInputs(inputString):
-    return inputString.lower()
+    return inputString.lower().strip()
 
 def getUserData(userId):
     source = UserDataSource()
@@ -59,7 +59,7 @@ def determineTimeSlot(datetime):
         return EARLY_PM_SLOT
     elif datetime.hour in range(18,24):
         return LATE_PM_SLOT
-    return "Other"
+    return "other"
 
 def writeUserData(userData):
     """
@@ -99,24 +99,17 @@ def addMedToPlan(medicationName, dose, timeSlot):
         userData = getUserData(userId)
         timeSlot = sanitizeInputs(timeSlot)
         medicationName = sanitizeInputs(medicationName)
-        for slot in userData.timeSlots:
-            if slot["name"] == timeSlot:
-                match = False
-                for medication in slot["medications"]:
-                    if medication["name"] == medicationName:
-                        medication["dose"] += dose
-                        match = True
-                        break
-                if match == False:
-                    medData = {
-                        "name": medicationName,
-                        "taken": "None",
-                        "dose": dose
-                    }
-                    slot["medications"].append(medData)
-                writeUserData(userData)
-                break
-        return statement("Added %i dose of %s to %s" %(dose, medicationName, timeSlot))
+        medicationData = userData.getMedication(timeSlot, medicationName)
+        if medicationData is None:
+            medicationData = {
+                "name": medicationName,
+                "taken": None,
+                "dose": dose
+            }
+        else:
+            medicationData['dose'] += dose
+        userData.updateMedication(timeSlot, medicationName, medicationData)
+        return statement("Added %i doses of %s to %s" %(dose, medicationName, timeSlot))
 
 @ask.intent("removeMedFromPlan", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def removeMedFromPlan(medicationName, timeSlot):
@@ -130,19 +123,8 @@ def removeMedFromPlan(medicationName, timeSlot):
         userData = getUserData(userId)
         timeSlot = sanitizeInputs(timeSlot)
         medicationName = sanitizeInputs(medicationName)
-        for slot in userData.timeSlots:
-            if slot["name"] == timeSlot:
-                match = False
-                for i in range(0, len(slot["medications"])):
-                    if slot["medications"][i]["name"] == medicationName:
-                        del slot["medications"][i]
-                        match = True
-                        writeUserData(userData)
-                        break
-                if match == False:
-                    return statement("could not find %s in %s slot" %(medicationName, timeSlot))
-                else:
-                    return statement("removed %s from %s slot" %(medicationName, timeSlot))
+        userData.removeMedication(timeSlot, medicationName)
+        return statement("removed %s from %s slot" %(medicationName, timeSlot))
 
 @ask.intent("listMedFromPlan")
 def listMedFromPlan():
@@ -165,36 +147,27 @@ def listMedFromPlan():
 
 
 @ask.intent("recordMedication")
-def recordmeds(MedicationName):
+def recordmeds(medicationName):
     timestamp = datetime.datetime.now()
     takenTime = str(timestamp.strftime("%I:%M %p"))
     timestampString = str(timestamp.strftime("%Y%m%d%H%M%S"))
-    print MedicationName
-    if MedicationName is None:
+    if medicationName is None:
         return question(render_template("ask_for_repeat"))
     else:
         userId = context.System.device.deviceId
-        userData = getUserData(USER_DATA_PATH, userId)
-        medicationName = sanitizeInputs(MedicationName)
+        userData = getUserData(userId)
+        medicationName = sanitizeInputs(medicationName)
         timeSlot = determineTimeSlot(timestamp)
-        for slot in userData["timeSlots"]:
-            if slot["name"] == timeSlot:
-                match = False
-                for medication in slot["medications"]:
-                    if medication["name"] == medicationName:
-                        medication["taken"] = timestampString
-                        medication["dose"] += 1
-                        match = True
-                        break
-                if match == False:
-                    medData = {
-                        "taken": timestampString,
-                        "name": medicationName,
-                        "dose": 1
-                    }
-                    slot["medications"].append(medData)
-                writeUserData(USER_DATA_PATH, userData)
-                break
+        medicationData = userData.getMedication(timeSlot, medicationName)
+        if medicationData is None:
+            medicationData = {
+                "name": medicationName,
+                "taken": timestampString,
+                "dose": 1
+            }
+        else:
+            medicationData['taken'] = timestampString
+        userData.updateMedication(timeSlot, medicationName, medicationData)
         return statement("I've recorded that you took " + medicationName + " at "+ takenTime )
 
 if __name__ == '__main__':

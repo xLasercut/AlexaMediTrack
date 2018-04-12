@@ -19,26 +19,47 @@ class DailyDosage(object):
     def userId(self):
         return self.state['userId']
 
-    def takeMedication(self, timeslot):
+    def getMedication(self, timeslot, name):
         for slot in self.timeSlots:
             if slot['name'] == timeslot:
-                for medication in slot["medications"]:
-                    medication['taken'] = datetime.now().strftime("%Y%m%d-%H%M%S")
+                for medication in slot['medications']:
+                    if medication['name'] == name:
+                        return medication
+                return None
+
+    def updateMedication(self, timeslot, name, updatedData):
+        for slot in self.timeSlots:
+            if slot['name'] == timeslot:
+                match = False
+                for medication in slot['medications']:
+                    if medication['name'] == name:
+                        medication['name'] = updatedData['name']
+                        medication['taken'] = updatedData['taken']
+                        medication['dose'] = updatedData['dose']
+                        match = True
+                        break
+                if match == False:
+                    slot['medications'].append(updatedData)
+                self.updateState()
                 break
 
-        self.updateState()
-
-    def hasTaken(self, timeslot):
+    def removeMedication(self, timeslot, name):
         for slot in self.timeSlots:
-            if slot['name'] == timeslot and slot['taken']:
-                return True
-
-        return False
+            if slot['name'] == timeslot:
+                for i in range(0, len(slot["medications"])):
+                    if slot["medications"][i]["name"] == name:
+                        del slot["medications"][i]
+                        self.updateState()
+                        break
+                break
 
     def getAllMedicationTaken(self):
         dosagesTaken = []
         for slot in self.timeSlots:
-            takenSlot = {'name' : slot['name'], 'medications' :[] }
+            takenSlot = {
+                'name' : slot['name'],
+                'medications' :[]
+            }
             for medication in slot['medications']:
                 if medication['taken']:
                     takenSlot['medications'].append(medication)
@@ -51,7 +72,10 @@ class DailyDosage(object):
     def getAllMedicationNotTaken(self):
         dosagesTaken = []
         for slot in self.timeSlots:
-            notTakenSlot = {'name' : slot['name'], 'medications' :[] }
+            notTakenSlot = {
+                'name' : slot['name'],
+                'medications' :[]
+            }
             for medication in slot['medications']:
                 if not medication['taken']:
                     notTakenSlot['medications'].append(medication)
