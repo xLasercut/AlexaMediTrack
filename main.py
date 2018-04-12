@@ -20,6 +20,10 @@ ask = Ask(app, '/')
 
 USER_DATA_PATH = "user_data.json"
 
+EARLY_AM_SLOT = "Early AM"
+EARLY_PM_SLOT = "Early PM"
+LATE_AM_SLOT = "Late AM"
+LATE_PM_SLOT = "Late AM"
 
 @ask.on_session_started
 def newSession():
@@ -46,6 +50,17 @@ def getUserData(userId):
     else:
         return PrescriptionFinder(FakeSpineProxy(), source).getPrescriptions(userId)
 
+def determineTimeSlot(datetime):
+    if datetime.hour in range(0,6):
+        return EARLY_AM_SLOT
+    elif datetime.hour in range(6,12):
+        return LATE_AM_SLOT
+    elif datetime.hour in range(12,18):
+        return EARLY_PM_SLOT
+    elif datetime.hour in range(18,24):
+        return LATE_PM_SLOT
+    return "Other"
+
 def writeUserData(userData):
     """
     Write user data to disk
@@ -70,8 +85,6 @@ def medicationTakenInfo():
 
     userData = getUserData(userId)
     return statement(alexaReader.readCurrentStatus(userData))
-
-
 
 @ask.intent("addMedToPlan", convert={"dose": int, "medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def addMedToPlan(medicationName, dose, timeSlot):
@@ -150,6 +163,39 @@ def listMedFromPlan():
     else:
         return statement("Your medications list is empty")
 
+
+@ask.intent("recordMedication")
+def recordmeds(MedicationName):
+    timestamp = datetime.datetime.now()
+    takenTime = str(timestamp.strftime("%I:%M %p"))
+    timestampString = str(timestamp.strftime("%Y%m%d%H%M%S"))
+    print MedicationName
+    if MedicationName is None:
+        return question(render_template("ask_for_repeat"))
+    else:
+        userId = context.System.device.deviceId
+        userData = getUserData(USER_DATA_PATH, userId)
+        medicationName = sanitizeInputs(MedicationName)
+        timeSlot = determineTimeSlot(timestamp)
+        for slot in userData["timeSlots"]:
+            if slot["name"] == timeSlot:
+                match = False
+                for medication in slot["medications"]:
+                    if medication["name"] == medicationName:
+                        medication["taken"] = timestampString
+                        medication["dose"] += 1
+                        match = True
+                        break
+                if match == False:
+                    medData = {
+                        "taken": timestampString,
+                        "name": medicationName,
+                        "dose": 1
+                    }
+                    slot["medications"].append(medData)
+                writeUserData(USER_DATA_PATH, userData)
+                break
+        return statement("I've recorded that you took " + medicationName + " at "+ takenTime )
 
 if __name__ == '__main__':
     app.run(debug=True)
