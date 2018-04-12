@@ -2,7 +2,7 @@ from importdata.prescriptions import DailyDosage
 
 class UserDataReader(object):
 
-    def getDoseString(dose):
+    def getDoseString(self, dose):
         if dose > 1:
             return "doses"
         else:
