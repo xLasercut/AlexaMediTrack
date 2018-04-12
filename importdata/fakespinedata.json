@@ -4,14 +4,14 @@
     "medications" : [
       {
         "name" : "paracetamol",
-        "dailyDosage" : 4,
+        "dailyDosage" : 1,
         "interval" : 4,
         "dosage" : 1,
         "daysSupply" : 40
       },
       {
         "name" : "vitamin a",
-        "dailyDosage" : 4,
+        "dailyDosage" : 2,
         "interval" : 2,
         "dosage" : 1,
         "daysSupply" : 20
