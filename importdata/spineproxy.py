@@ -17,7 +17,7 @@ class FakeSpineProxy(SpineProxy):
 
     def _loadData(self):
         dataSource = {}
-        path = os.path.dirname(os.path.realpath(__file__)) + "\\" + self.FAKE_DATA_SOURCE
+        path = os.path.dirname(os.path.realpath(__file__)) + "/" + self.FAKE_DATA_SOURCE
         with open(path, "r") as source:
             dataSource = json.loads(source.read())
 
@@ -26,4 +26,3 @@ class FakeSpineProxy(SpineProxy):
     def getPrescriptions(self, nhsNumber):
         """ Gets all prescriptions from spine """
         return self.dataSource.get(nhsNumber, self.EMPTY_PRESCRIPTION)
-
