@@ -26,4 +26,3 @@ class FakeSpineProxy(SpineProxy):
     def getPrescriptions(self, nhsNumber):
         """ Gets all prescriptions from spine """
         return self.dataSource.get(nhsNumber, self.EMPTY_PRESCRIPTION)
-

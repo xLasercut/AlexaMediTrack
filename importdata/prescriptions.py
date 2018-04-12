@@ -21,8 +21,9 @@ class DailyDosage(object):
 
     def takeMedication(self, timeslot):
         for slot in self.timeSlots:
-            if slot['name'] == timeslot and not slot['taken']:
-                slot['taken'] = datetime.now().strftime("%Y%m%d-%H%M%S")
+            if slot['name'] == timeslot:
+                for medication in slot["medication"]:
+                    medication['taken'] = datetime.now().strftime("%Y%m%d-%H%M%S")
                 break
 
         self.updateState()
@@ -90,10 +91,10 @@ class PrescriptionFinder(object):
         dailyDosage = prescription[SpineProxy.DOSAGE_KEY]
         distibution = self._getDistribution(dailyDosage, len(timeSlots))
         for i, dosage in enumerate(distibution):
-            timeSlots[i]['medication'].append({
+            timeSlots[i]['medications'].append({
                 'name' : prescription[SpineProxy.NAME_KEY],
                 'dose' : dosage,
-                'taken' : None
+                'taken': None
             })
 
     def _getTimeSlots(self):
@@ -103,7 +104,7 @@ class PrescriptionFinder(object):
         for slotName in slotNames:
             slot = {}
             slot['name'] = slotName
-            slot['medication'] = []
+            slot['medications'] = []
             slots.append(slot)
 
         return slots
@@ -133,8 +134,8 @@ class TimeSlices(object):
             cls.OTHER
         ]
 
-    EARLY_AM = "Early AM"
-    LATE_AM = "Late AM"
-    EARLY_PM = "Early PM"
-    LATE_PM = "Late PM"
-    OTHER = "Other"
+    EARLY_AM = "early am"
+    LATE_AM = "late am"
+    EARLY_PM = "early pm"
+    LATE_PM = "late pm"
+    OTHER = "other"
