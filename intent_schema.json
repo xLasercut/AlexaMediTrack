@@ -13,6 +13,11 @@
                     "name": "medTakenInfo",
                     "slots": [],
                     "samples": [
+                        "what medications did i take ",
+                        "what have i taken",
+                        "which meds did I take",
+                        "what medicines have I had",
+                        "what medications have I taken"
                         "medication information",
                         "medication info",
                         "med info",
@@ -40,6 +45,7 @@
                     ],
                     "samples": [
                         "Record that I've had {medicationName}",
+                        "Record that I just had {medicationName}",
                         "Record that I've taken {medicationName}",
                         "Record that I took {medicationName}",
                         "Record that I took {medicationName} for {timeSlot}",
@@ -65,6 +71,7 @@
                     ],
                     "samples": [
                         "add {dose} doses of {medicationName} to {timeSlot}",
+                        "Add a {dose} of {medicationName} to {timeSlot}",
                         "add {dose} of {medicationName} to {timeSlot}",
                         "add {dose} dose of {medicationName} to {timeSlot}"
                     ]
@@ -11785,7 +11792,7 @@
                     {
                         "type": "PlainText",
                         "value": "Okay, You want me to remember that you took your {medicationName} ?"
-                    }
+                   }
                 ]
             }
         ]
