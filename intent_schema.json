@@ -18,14 +18,12 @@
                         "which meds did I take",
                         "what medicines have I had",
                         "what medications have I taken"
-                    ]
-                },
-                {
-                    "name": "trackerSetup",
-                    "slots": [],
-                    "samples": [
-                        "setup tracker",
-                        "tracker setup"
+                        "medication information",
+                        "medication info",
+                        "med info",
+                        "medication taken",
+                        "meds taken",
+                        "med taken"
                     ]
                 },
                 {
@@ -39,15 +37,25 @@
                                 "I took my {medicationName}",
                                 "{medicationName}"
                             ]
+                        },
+                        {
+                            "name": "timeSlot",
+                            "type": "MedTimeSlot"
                         }
                     ],
                     "samples": [
                         "Record that I just had {medicationName}",
                         "Record that I have used my {medicationName}",
-                        "Record that I took {medicationName}",
                         "Record my {medicationName} ",
                         "Record that I've taken my  {medicationName} ",
                         "Record that I've had my {medicationName}"
+                        "Record that I've had P {medicationName}",
+                        "Record that I've taken {medicationName}",
+                        "Record that I took {medicationName}",
+                        "Record that I took {medicationName} for {timeSlot}",
+                        "Record that I've taken my {timeSlot} {medicationName} ",
+                        "Record that I've had my {timeSlot} {medicationName}"
+
                     ]
                 },
                 {
@@ -11692,27 +11700,50 @@
                     "values": [
                         {
                             "name": {
-                                "value": "other"
+                                "value": "other",
+                                "synonyms": [
+                                    "others"
+                                ]
                             }
                         },
                         {
                             "name": {
-                                "value": "late PM"
+                                "value": "late PM",
+                                "synonyms": [
+                                    "late P.M.",
+                                    "late p.m.",
+                                    "late pm"
+                                ]
                             }
                         },
                         {
                             "name": {
-                                "value": "early PM"
+                                "value": "early PM",
+                                "synonyms": [
+                                    "early P.M.",
+                                    "early p.m.",
+                                    "early pm"
+                                ]
                             }
                         },
                         {
                             "name": {
-                                "value": "late AM"
+                                "value": "late AM",
+                                "synonyms": [
+                                    "late A.M.",
+                                    "late a.m.",
+                                    "late am"
+                                ]
                             }
                         },
                         {
                             "name": {
-                                "value": "early AM"
+                                "value": "early AM",
+                                "synonyms": [
+                                    "early a.m.",
+                                    "early A.M.",
+                                    "early am"
+                                ]
                             }
                         }
                     ]
@@ -11734,6 +11765,13 @@
                             "prompts": {
                                 "elicitation": "Elicit.Slot.1036009112315.721476933776"
                             }
+                        },
+                        {
+                            "name": "timeSlot",
+                            "type": "MedTimeSlot",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 }
@@ -11754,8 +11792,12 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Okay, You want me to remember that you took your {MedicationName} ?"
-                    }
+                        "value": "Okay, You want me to record that you took your {timeSlot} {medicationName} ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Okay, You want me to remember that you took your {medicationName} ?"
+                   }
                 ]
             }
         ]
