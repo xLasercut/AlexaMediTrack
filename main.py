@@ -131,26 +131,6 @@ def removeMedFromPlan(medicationName, timeSlot):
         userData.removeMedication(timeSlot, medicationName)
         return statement("removed {} from {} slot".format(medicationName, timeSlot))
 
-@ask.intent("listMedFromPlan")
-def listMedFromPlan():
-    """
-    Returns the amount and type of medication from the 'planned' list
-    """
-    userId = context.System.device.deviceId
-    userData = getUserData(userId)
-    medList = []
-    for slot in userData.timeSlots:
-        if slot["medications"]:
-            medList.append("{} slot contains:".format(slot["name"]))
-        for medication in slot["medications"]:
-            medList.append("{} {} of {}".format(medication["dose"], getDoseString(medication["dose"]), medication["name"]))
-
-    if medList:
-        return statement("Your medications list: {}".format(" ".join(medList)))
-    else:
-        return statement("Your medications list is empty")
-
-
 @ask.intent("recordMedication", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def recordmeds(medicationName, timeSlot):
     timestamp = datetime.datetime.now()
