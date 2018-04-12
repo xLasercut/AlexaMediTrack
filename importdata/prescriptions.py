@@ -22,7 +22,7 @@ class DailyDosage(object):
     def takeMedication(self, timeslot):
         for slot in self.timeSlots:
             if slot['name'] == timeslot:
-                for medication in slot["medication"]:
+                for medication in slot["medications"]:
                     medication['taken'] = datetime.now().strftime("%Y%m%d-%H%M%S")
                 break
 
