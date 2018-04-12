@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "med track",
+            "invocationName": "medi track",
             "intents": [
                 {
                     "name": "AMAZON.HelpIntent",
