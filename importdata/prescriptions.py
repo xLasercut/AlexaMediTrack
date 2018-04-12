@@ -34,11 +34,29 @@ class DailyDosage(object):
 
         return False
 
-    def getTotalTaken(self):
+    def getAllMedicationTaken(self):
         dosagesTaken = []
         for slot in self.timeSlots:
-            if slot['taken']:
-                dosagesTaken.append(slot)
+            takenSlot = {'name' : slot['name'], 'medications' :[] }
+            for medication in slot['medications']:
+                if medication['taken']:
+                    takenSlot['medications'].append(medication)
+
+            if takenSlot['medications']:
+                dosagesTaken.append(takenSlot)
+
+        return dosagesTaken
+
+    def getAllMedicationNotTaken(self):
+        dosagesTaken = []
+        for slot in self.timeSlots:
+            notTakenSlot = {'name' : slot['name'], 'medications' :[] }
+            for medication in slot['medications']:
+                if not medication['taken']:
+                    notTakenSlot['medications'].append(medication)
+
+            if notTakenSlot['medications']:
+                dosagesTaken.append(notTakenSlot)
 
         return dosagesTaken
 
@@ -74,7 +92,8 @@ class PrescriptionFinder(object):
         for i, dosage in enumerate(distibution):
             timeSlots[i]['medication'].append({
                 'name' : prescription[SpineProxy.NAME_KEY],
-                'dose' : dosage
+                'dose' : dosage,
+                'taken' : None
             })
 
     def _getTimeSlots(self):
@@ -84,7 +103,6 @@ class PrescriptionFinder(object):
         for slotName in slotNames:
             slot = {}
             slot['name'] = slotName
-            slot['taken'] = None
             slot['medication'] = []
             slots.append(slot)
 
