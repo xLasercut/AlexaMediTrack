@@ -11,9 +11,9 @@
       },
       {
         "name" : "vitamin a",
-        "dailyDosage" : 2,
+        "dailyDosage" : 4,
         "interval" : 2,
-        "dosage" : 1,
+        "dosage" : 2,
         "daysSupply" : 20
       }
     ]

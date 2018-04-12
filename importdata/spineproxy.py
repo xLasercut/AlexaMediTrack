@@ -2,7 +2,8 @@ import os
 import json
 
 class SpineProxy(object):
-    DOSAGE_KEY = "dailyDosage"
+    DAILY_DOSAGE_KEY = "dailyDosage"
+    DOSAGE_KEY = "dosage"
     COURSE_KEY = "course"
     NAME_KEY = "name"
     MEDICATION_KEY = "medications"

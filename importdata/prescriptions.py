@@ -112,16 +112,25 @@ class PrescriptionFinder(object):
         return dailyDosagePlan
 
     def _addDosage(self, prescription, timeSlots):
-        dailyDosage = prescription[SpineProxy.DOSAGE_KEY]
-        distibution = self._getDistribution(dailyDosage, len(timeSlots))
-        print distibution
-        for i, dosage in enumerate(distibution):
-            if dosage > 0:
+        dailyDosage = prescription[SpineProxy.DAILY_DOSAGE_KEY]
+        dosagePerSlot = prescription[SpineProxy.DOSAGE_KEY]
+        for i in len(timeSlots):
+            if dailyDosage > 0:
                 timeSlots[i]['medications'].append({
                     'name' : prescription[SpineProxy.NAME_KEY],
-                    'dose' : dosage,
+                    'dose' : dosagePerSlot,
                     'taken': None
                 })
+                dailyDosage -= dosagePerSlot
+            elif dailyDosage < 0:
+                timeSlots[i]['medications'].append({
+                    'name' : prescription[SpineProxy.NAME_KEY],
+                    'dose' : dosagePerSlot + dailyDosage,
+                    'taken': None
+                })
+                break
+            else:
+                break
 
     def _getTimeSlots(self):
         slotNames = TimeSlices.getFourSlots()

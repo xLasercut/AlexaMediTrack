@@ -108,7 +108,7 @@ def addMedToPlan(medicationName, dose, timeSlot):
         else:
             medicationData['dose'] += dose
         userData.updateMedication(timeSlot, medicationName, medicationData)
-        return statement("Added {} doses of {} to {}".format(dose, medicationName, timeSlot))
+        return statement("Added {} {} of {} to {}".format(dose, alexaReader.getDoseString(dose), medicationName, timeSlot))
 
 @ask.intent("removeMedFromPlan", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def removeMedFromPlan(medicationName, timeSlot):
@@ -136,7 +136,7 @@ def listMedFromPlan():
         if slot["medications"]:
             medList.append("{} slot contains:".format(slot["name"]))
         for medication in slot["medications"]:
-            medList.append("{} dose of {}".format(medication["dose"], medication["name"]))
+            medList.append("{} {} of {}".format(medication["dose"], alexaReader.getDoseString(medication["dose"]), medication["name"]))
 
     if medList:
         return statement("Your medications list: {}".format(" ".join(medList)))
@@ -144,8 +144,8 @@ def listMedFromPlan():
         return statement("Your medications list is empty")
 
 
-@ask.intent("recordMedication")
-def recordmeds(medicationName):
+@ask.intent("recordMedication", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
+def recordmeds(medicationName, timeSlot):
     timestamp = datetime.datetime.now()
     takenTime = str(timestamp.strftime("%I:%M %p"))
     timestampString = str(timestamp.strftime("%Y%m%d%H%M%S"))
@@ -155,7 +155,8 @@ def recordmeds(medicationName):
         userId = context.System.device.deviceId
         userData = getUserData(userId)
         medicationName = sanitizeInputs(medicationName)
-        timeSlot = determineTimeSlot(timestamp)
+        if not timeSlot:
+            timeSlot = determineTimeSlot(timestamp)
         medicationData = userData.getMedication(timeSlot, medicationName)
         if not medicationData:
             medicationData = {
@@ -166,7 +167,7 @@ def recordmeds(medicationName):
         else:
             medicationData['taken'] = timestampString
         userData.updateMedication(timeSlot, medicationName, medicationData)
-        return statement("I've recorded that you took " + medicationName + " at "+ takenTime )
+        return statement("I've recorded that you took {} for {} slot".format(medicationName, timeSlot))
 
 if __name__ == '__main__':
     app.run(debug=True)
