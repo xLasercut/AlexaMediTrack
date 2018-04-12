@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "medi track",
+            "invocationName": "med track",
             "intents": [
                 {
                     "name": "AMAZON.HelpIntent",
@@ -13,9 +13,11 @@
                     "name": "medTakenInfo",
                     "slots": [],
                     "samples": [
-                        "medication taken",
-                        "meds taken",
-                        "med taken"
+                        "what medications did i take ",
+                        "what have i taken",
+                        "which meds did I take",
+                        "what medicines have I had",
+                        "what medications have I taken"
                     ]
                 },
                 {
@@ -30,24 +32,22 @@
                     "name": "recordMedication",
                     "slots": [
                         {
-                            "name": "medicationName",
+                            "name": "MedicationName",
                             "type": "MedicationNameSlot",
                             "samples": [
-                                "I had {medicationName}",
-                                "I took my {medicationName}",
-                                "{medicationName}"
+                                "I had {MedicationName}",
+                                "I took my {MedicationName}",
+                                "{MedicationName}"
                             ]
-                        },
-                        {
-                            "name": "medicationTimeframe",
-                            "type": "AMAZON.TIME"
                         }
                     ],
                     "samples": [
-                        "Record that I took {medicationName}",
-                        "Record that I took {medicationName} for {medicationTimeframe}",
-                        "Record that I've taken my {medicationTimeframe} {medicationName} ",
-                        "Record that I've had my {medicationTimeframe} {medicationName}"
+                        "Record that I just had {MedicationName}",
+                        "Record that I have used my {MedicationName}",
+                        "Record that I took {MedicationName}",
+                        "Record my {MedicationName} ",
+                        "Record that I've taken my  {MedicationName} ",
+                        "Record that I've had my {MedicationName}"
                     ]
                 },
                 {
@@ -68,6 +68,7 @@
                     ],
                     "samples": [
                         "add {dose} doses of {medicationName} to {timeSlot}",
+                        "Add a {dose} of {medicationName} to {timeSlot}",
                         "add {dose} of {medicationName} to {timeSlot}",
                         "add {dose} dose of {medicationName} to {timeSlot}"
                     ]
@@ -11696,22 +11697,22 @@
                         },
                         {
                             "name": {
-                                "value": "late PM"
+                                "value": "late pm"
                             }
                         },
                         {
                             "name": {
-                                "value": "early PM"
+                                "value": "early pm"
                             }
                         },
                         {
                             "name": {
-                                "value": "late AM"
+                                "value": "late am"
                             }
                         },
                         {
                             "name": {
-                                "value": "early AM"
+                                "value": "early am"
                             }
                         }
                     ]
@@ -11722,26 +11723,17 @@
             "intents": [
                 {
                     "name": "recordMedication",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.1036009112315"
-                    },
+                    "confirmationRequired": false,
+                    "prompts": {},
                     "slots": [
                         {
-                            "name": "medicationName",
+                            "name": "MedicationName",
                             "type": "MedicationNameSlot",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.1036009112315.721476933776"
                             }
-                        },
-                        {
-                            "name": "medicationTimeframe",
-                            "type": "AMAZON.TIME",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
                         }
                     ]
                 }
@@ -11762,11 +11754,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Okay, You want me to record that you took your {medicationTimeframe} {medicationName} ?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "Okay, You want me to remember that you took your {medicationName} ?"
+                        "value": "Okay, You want me to remember that you took your {MedicationName} ?"
                     }
                 ]
             }
