@@ -10,12 +10,12 @@ class UserDataReader(object):
         print medTaken
         print medNotTaken
 
-        if medTaken is None:
+        if not medTaken:
             for slot in medNotTaken:
                 medInfo.append("You have yet to take %s dose, containing:" %(slot["name"]))
                 for medication in slot["medications"]:
                     medInfo.append("%i dose of %s." %(medication["dose"], medication["name"]))
-        elif medNotTaken is None:
+        elif not medNotTaken:
             for slot in medTaken:
                 medInfo.append("You have taken %s dose, containing:" %(slot["name"]))
                 for medication in slot["medications"]:
