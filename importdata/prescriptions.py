@@ -38,7 +38,7 @@ class DailyDosage(object):
                         medication['dose'] = updatedData['dose']
                         match = True
                         break
-                if match == False:
+                if not match:
                     slot['medications'].append(updatedData)
                 self.updateState()
                 break
@@ -116,11 +116,12 @@ class PrescriptionFinder(object):
         distibution = self._getDistribution(dailyDosage, len(timeSlots))
         print distibution
         for i, dosage in enumerate(distibution):
-            timeSlots[i]['medications'].append({
-                'name' : prescription[SpineProxy.NAME_KEY],
-                'dose' : dosage,
-                'taken': None
-            })
+            if dosage > 0:
+                timeSlots[i]['medications'].append({
+                    'name' : prescription[SpineProxy.NAME_KEY],
+                    'dose' : dosage,
+                    'taken': None
+                })
 
     def _getTimeSlots(self):
         slotNames = TimeSlices.getFourSlots()

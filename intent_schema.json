@@ -30,24 +30,24 @@
                     "name": "recordMedication",
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "medicationName",
                             "type": "MedicationNameSlot",
                             "samples": [
-                                "I had {MedicationName}",
-                                "I took my {MedicationName}",
-                                "{MedicationName}"
+                                "I had {medicationName}",
+                                "I took my {medicationName}",
+                                "{medicationName}"
                             ]
                         },
                         {
-                            "name": "MedicationTimeframe",
+                            "name": "medicationTimeframe",
                             "type": "AMAZON.TIME"
                         }
                     ],
                     "samples": [
-                        "Record that I took {MedicationName}",
-                        "Record that I took {MedicationName} for {MedicationTimeframe}",
-                        "Record that I've taken my {MedicationTimeframe} {MedicationName} ",
-                        "Record that I've had my {MedicationTimeframe} {MedicationName}"
+                        "Record that I took {medicationName}",
+                        "Record that I took {medicationName} for {medicationTimeframe}",
+                        "Record that I've taken my {medicationTimeframe} {medicationName} ",
+                        "Record that I've had my {medicationTimeframe} {medicationName}"
                     ]
                 },
                 {
@@ -67,6 +67,7 @@
                         }
                     ],
                     "samples": [
+                        "add {dose} doses of {medicationName} to {timeSlot}",
                         "add {dose} of {medicationName} to {timeSlot}",
                         "add {dose} dose of {medicationName} to {timeSlot}"
                     ]
@@ -102,8 +103,7 @@
             "types": [
                 {
                     "name": "MedicationNameSlot",
-                    "values":
-                    [
+                    "values": [
                         {
                             "name": {
                                 "value": "Abacavir"
@@ -11685,7 +11685,6 @@
                             }
                         }
                     ]
-
                 },
                 {
                     "name": "MedTimeSlot",
@@ -11697,22 +11696,22 @@
                         },
                         {
                             "name": {
-                                "value": "late pm"
+                                "value": "late PM"
                             }
                         },
                         {
                             "name": {
-                                "value": "early pm"
+                                "value": "early PM"
                             }
                         },
                         {
                             "name": {
-                                "value": "late am"
+                                "value": "late AM"
                             }
                         },
                         {
                             "name": {
-                                "value": "early am"
+                                "value": "early AM"
                             }
                         }
                     ]
@@ -11729,7 +11728,7 @@
                     },
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "medicationName",
                             "type": "MedicationNameSlot",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
@@ -11738,7 +11737,7 @@
                             }
                         },
                         {
-                            "name": "MedicationTimeframe",
+                            "name": "medicationTimeframe",
                             "type": "AMAZON.TIME",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
@@ -11763,11 +11762,11 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Okay, You want me to record that you took your {MedicationTimeframe} {MedicationName} ?"
+                        "value": "Okay, You want me to record that you took your {medicationTimeframe} {medicationName} ?"
                     },
                     {
                         "type": "PlainText",
-                        "value": "Okay, You want me to remember that you took your {MedicationName} ?"
+                        "value": "Okay, You want me to remember that you took your {medicationName} ?"
                     }
                 ]
             }

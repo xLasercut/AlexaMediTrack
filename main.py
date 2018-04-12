@@ -20,10 +20,10 @@ ask = Ask(app, '/')
 
 USER_DATA_PATH = "user_data.json"
 
-EARLY_AM_SLOT = "early am"
-EARLY_PM_SLOT = "early pm"
-LATE_AM_SLOT = "late am"
-LATE_PM_SLOT = "late pm"
+EARLY_AM_SLOT = "early AM"
+EARLY_PM_SLOT = "early PM"
+LATE_AM_SLOT = "late AM"
+LATE_PM_SLOT = "late PM"
 
 @ask.on_session_started
 def newSession():
@@ -92,12 +92,11 @@ def addMedToPlan(medicationName, dose, timeSlot):
     Add medication to list
     - if medication already exist on list, then increase the total amount
     """
-    if medicationName is None or dose is None or timeSlot is None:
+    if not medicationName or not dose or not timeSlot:
         return question(render_template("ask_for_repeat"))
     else:
         userId = context.System.device.deviceId
         userData = getUserData(userId)
-        timeSlot = sanitizeInputs(timeSlot)
         medicationName = sanitizeInputs(medicationName)
         medicationData = userData.getMedication(timeSlot, medicationName)
         if medicationData is None:
@@ -109,22 +108,21 @@ def addMedToPlan(medicationName, dose, timeSlot):
         else:
             medicationData['dose'] += dose
         userData.updateMedication(timeSlot, medicationName, medicationData)
-        return statement("Added %i doses of %s to %s" %(dose, medicationName, timeSlot))
+        return statement("Added {} doses of {} to {}".format(dose, medicationName, timeSlot))
 
 @ask.intent("removeMedFromPlan", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def removeMedFromPlan(medicationName, timeSlot):
     """
     Deletes medication from both 'planned' and 'actual' lists
     """
-    if medicationName is None or timeSlot is None:
+    if not medicationName or not timeSlot:
         return question(render_template("ask_for_repeat"))
     else:
         userId = context.System.device.deviceId
         userData = getUserData(userId)
-        timeSlot = sanitizeInputs(timeSlot)
         medicationName = sanitizeInputs(medicationName)
         userData.removeMedication(timeSlot, medicationName)
-        return statement("removed %s from %s slot" %(medicationName, timeSlot))
+        return statement("removed {} from {} slot".format(medicationName, timeSlot))
 
 @ask.intent("listMedFromPlan")
 def listMedFromPlan():
@@ -151,7 +149,7 @@ def recordmeds(medicationName):
     timestamp = datetime.datetime.now()
     takenTime = str(timestamp.strftime("%I:%M %p"))
     timestampString = str(timestamp.strftime("%Y%m%d%H%M%S"))
-    if medicationName is None:
+    if not medicationName:
         return question(render_template("ask_for_repeat"))
     else:
         userId = context.System.device.deviceId
