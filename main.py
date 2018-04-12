@@ -42,7 +42,7 @@ def sessionEnded():
 def sanitizeInputs(inputString):
     return inputString.lower().strip()
 
-def getDoseString(self, dose):
+def getDoseString(dose):
     if dose > 1:
         return "doses"
     else:
