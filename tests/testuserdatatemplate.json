@@ -4,41 +4,43 @@
 	"date" : "{{date}}",
 	"timeSlots": [{
 		"name": "EarlyAM",
-		"taken": "{{date}}084420",
 		"medications": [{
 			"name": "dried frog pills",
+			"taken": "{{date}}084420",
 			"dose": "1"
 		}]
 	},
 	{
 		"name": "LateAM",
-		"taken": "{{date}}084420",
 		"medications": [{
 			"name": "dried frog pills",
+			"taken": "{{date}}084420",
 			"dose": "1"
 		},
 		{
 			"name": "Aufero capitis",
+			"taken": "{{date}}084420",
 			"dose": "1"
 		}]
 	},
 	{
 		"name": "EarlyPM",
-		"taken": "None",
 		"medications": [{
 			"name": "dried frog pills",
+			"taken": "None",
 			"dose": "1"
 		}]
 	},
 	{
 		"name": "LatePM",
-		"taken": "None",
 		"medications": [{
 			"name": "dried frog pills",
+			"taken": "None",
 			"dose": "1"
 		},
 		{
 			"name": "Aufero capitis",
+			"taken": "None",
 			"dose": "1"
 		}]
 	}]
