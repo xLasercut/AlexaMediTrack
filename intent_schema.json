@@ -32,22 +32,22 @@
                     "name": "recordMedication",
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "medicationName",
                             "type": "MedicationNameSlot",
                             "samples": [
-                                "I had {MedicationName}",
-                                "I took my {MedicationName}",
-                                "{MedicationName}"
+                                "I had {medicationName}",
+                                "I took my {medicationName}",
+                                "{medicationName}"
                             ]
                         }
                     ],
                     "samples": [
-                        "Record that I just had {MedicationName}",
-                        "Record that I have used my {MedicationName}",
-                        "Record that I took {MedicationName}",
-                        "Record my {MedicationName} ",
-                        "Record that I've taken my  {MedicationName} ",
-                        "Record that I've had my {MedicationName}"
+                        "Record that I just had {medicationName}",
+                        "Record that I have used my {medicationName}",
+                        "Record that I took {medicationName}",
+                        "Record my {medicationName} ",
+                        "Record that I've taken my  {medicationName} ",
+                        "Record that I've had my {medicationName}"
                     ]
                 },
                 {
@@ -11727,7 +11727,7 @@
                     "prompts": {},
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "medicationName",
                             "type": "MedicationNameSlot",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
