@@ -42,6 +42,12 @@ def sessionEnded():
 def sanitizeInputs(inputString):
     return inputString.lower().strip()
 
+def getDoseString(self, dose):
+    if dose > 1:
+        return "doses"
+    else:
+        return "dose"
+
 def getUserData(userId):
     source = UserDataSource()
     data = source.load(userId)
@@ -108,7 +114,7 @@ def addMedToPlan(medicationName, dose, timeSlot):
         else:
             medicationData['dose'] += dose
         userData.updateMedication(timeSlot, medicationName, medicationData)
-        return statement("Added {} {} of {} to {}".format(dose, UserDataReader.getDoseString(dose), medicationName, timeSlot))
+        return statement("Added {} {} of {} to {}".format(dose, getDoseString(dose), medicationName, timeSlot))
 
 @ask.intent("removeMedFromPlan", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def removeMedFromPlan(medicationName, timeSlot):
@@ -136,7 +142,7 @@ def listMedFromPlan():
         if slot["medications"]:
             medList.append("{} slot contains:".format(slot["name"]))
         for medication in slot["medications"]:
-            medList.append("{} {} of {}".format(medication["dose"], UserDataReader.getDoseString(medication["dose"]), medication["name"]))
+            medList.append("{} {} of {}".format(medication["dose"], getDoseString(medication["dose"]), medication["name"]))
 
     if medList:
         return statement("Your medications list: {}".format(" ".join(medList)))
