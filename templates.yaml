@@ -1,5 +1,6 @@
 welcome: "Welcome to the alexa medication tracker. \
-For a list of commands, say: help."
+For a list of commands, say: help. \
+To exit medication tracker, say: stop."
 
 help: "For medication information, say: medication info. \
 To add two doses of paracetamol to morning slot, say: add two doses of paracetamol to morning.
