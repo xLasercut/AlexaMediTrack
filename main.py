@@ -186,7 +186,7 @@ def recordMedsTimeSlot(timeSlot):
                 break
         userData.updateState()
 
-        statementText = render_template('medication_time_taken', timeslot=timeSlot)
+        statementText = render_template('medication_timeslot_taken', timeslot=timeSlot)
 
         return statement(statementText)
 
