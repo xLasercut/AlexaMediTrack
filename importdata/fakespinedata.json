@@ -4,15 +4,13 @@
     "medications" : [
       {
         "name" : "paracetamol",
-        "dailyDosage" : 1,
-        "interval" : 4,
+        "timeSlots" : ["morning", "evening"],
         "dosage" : 1,
         "daysSupply" : 40
       },
       {
         "name" : "vitamin a",
-        "dailyDosage" : 4,
-        "interval" : 2,
+        "timeSlots" : ["afternoon"],
         "dosage" : 2,
         "daysSupply" : 20
       }
@@ -22,16 +20,14 @@
   {
     "medications" : [
       {
-        "name" : "Aufero capitis",
-        "dailyDosage" : 4,
-        "interval" : 2,
+        "name" : "pine",
+        "timeSlots" : ["afternoon"],
         "dosage" : 1,
         "daysSupply" : 28
       },
       {
-        "name" : "nolite sternumenta",
-        "dailyDosage" : 8,
-        "interval" : 4,
+        "name" : "vitamin c",
+        "timeSlots" : ["night"],
         "dosage" : 2,
         "daysSupply" : 40
       }

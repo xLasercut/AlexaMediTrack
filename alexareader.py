@@ -69,4 +69,4 @@ class AlexaInputSanitizer(object):
         for item in self.SANITIZE_DATA:
             if inputString.strip() in item["synonyms"]:
                 return item["actualValue"]
-        return inputString.strip()
+        return inputString.lower().strip()
