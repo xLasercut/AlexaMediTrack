@@ -162,10 +162,10 @@ class TimeSlices(object):
     @classmethod
     def getFourSlots(cls):
         return [
-            cls.EARLY_AM,
             cls.LATE_AM,
             cls.EARLY_PM,
             cls.LATE_PM,
+            cls.EARLY_AM,
             cls.OTHER
         ]
 
