@@ -77,6 +77,8 @@
                         }
                     ],
                     "samples": [
+                        "add {dose} of {medicationName} to {timeSlot} meds",
+                        "add {dose} dose of {medicationName} to {timeSlot} meds",
                         "add {dose} of {medicationName} to {timeSlot} slot",
                         "add {dose} doses of {medicationName} to {timeSlot}",
                         "Add a {dose} of {medicationName} to {timeSlot}",

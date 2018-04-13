@@ -102,7 +102,6 @@ def addMedToPlan(medicationName, dose, timeSlot):
         userData = getUserData(userId)
         sanitizer = AlexaInputSanitizer()
         medicationName = sanitizer.sanitizeInputs(medicationName)
-        timeBetweenDosages = sanitizer.sanitizeInputs(timeBetweenDosages)
         timeSlot = sanitizer.sanitizeInputs(timeSlot)
         medicationData = userData.getMedication(timeSlot, medicationName)
         if not medicationData:
