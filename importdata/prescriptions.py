@@ -19,6 +19,12 @@ class DailyDosage(object):
     def userId(self):
         return self.state['userId']
 
+    def getMedicationPerSlot(self, timeslot):
+        for slot in self.timeSlots:
+            if slot['name'] == timeslot:
+                return slot['medications']
+        return None
+
     def getMedication(self, timeslot, name):
         for slot in self.timeSlots:
             if slot['name'] == timeslot:

@@ -122,6 +122,24 @@
                         "record that I had my {timeSlot} pills",
                         "record that I took my {timeSlot} pills"
                     ]
+                },
+                {
+                    "name": "listMedToTakeByTimeSlot",
+                    "slots": [
+                        {
+                            "name": "timeSlot",
+                            "type": "MedTimeSlot"
+                        }
+                    ],
+                    "samples": [
+                        "what do I need to take in the {timeSlot}",
+                        "what do I need to take for {timeSlot}",
+                        "tell me the medication for {timeSlot}",
+                        "tell me my {timeSlot} medication",
+                        "show me my {timeSlot} meds",
+                        "show me medication for {timeSlot}",
+                        "list medication for {timeSlot}"
+                    ]
                 }
             ],
             "types": [

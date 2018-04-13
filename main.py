@@ -78,6 +78,10 @@ def writeUserData(userData):
 def launched():
     return question(render_template("welcome"))
 
+@ask.intent("AMAZON.HelpIntent")
+def showHelp():
+    return question(render_template("help"))
+
 @ask.intent("medTakenInfo")
 def medicationTakenInfo():
     """
@@ -161,6 +165,9 @@ def recordmeds(medicationName, timeSlot):
 
 @ask.intent("recordMedicationByTimeSlot", convert={"timeSlot": "MedTimeSlot"})
 def recordMedsTimeSlot(timeSlot):
+    """
+    Record medication taken for an entire slot
+    """
     if not timeSlot:
         return question(render_template("ask_for_repeat"))
     else:
@@ -177,5 +184,24 @@ def recordMedsTimeSlot(timeSlot):
                 break
         userData.updateState()
         return statement("I've recorded that you took your {} medication.".format(timeSlot))
+
+@ask.intent("listMedToTakeByTimeSlot", convert={"timeSlot": "MedTimeSlot"})
+def listMedToTakeTimeSlot(timeSlot):
+    if not timeSlot:
+        return question(render_template("ask_for_repeat"))
+    else:
+        userId = context.System.device.deviceId
+        userData = getUserData(userId)
+        sanitizer = AlexaInputSanitizer()
+        timeSlot = sanitizer.sanitizeInputs(timeSlot)
+        medList = userData.getMedicationPerSlot(timeSlot)
+        if medList:
+            msg = "Your {} medication contains: ".format(timeSlot)
+            for medication in medList:
+                msg += "{} {} of {}. ".format(medication["dose"], getDoseString(medication["dose"]), medication["name"])
+            return statement(msg)
+        else:
+            return statement("You don't need to take any medication in the {}".format(timeSlot))
+
 if __name__ == '__main__':
     app.run(debug=True)
