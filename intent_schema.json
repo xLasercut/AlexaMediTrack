@@ -27,7 +27,7 @@
                     ]
                 },
                 {
-                    "name": "recordMedication",
+                    "name": "recordMedicationByName",
                     "slots": [
                         {
                             "name": "medicationName",
@@ -101,6 +101,20 @@
                         "show me meds list",
                         "show me medication list",
                         "show me med list"
+                    ]
+                },
+                {
+                    "name": "recordMedicationByTimeSlot",
+                    "slots": [
+                        {
+                            "name": "timeSlot",
+                            "type": "MedTimeSlot"
+                        }
+                    ],
+                    "samples": [
+                        "record that I've had {timeSlot} medicine",
+                        "record that I had my {timeSlot} pills",
+                        "record that I took my {timeSlot} pills"
                     ]
                 }
             ],
@@ -11703,42 +11717,22 @@
                         },
                         {
                             "name": {
-                                "value": "late PM",
-                                "synonyms": [
-                                    "late P.M.",
-                                    "late p.m.",
-                                    "late pm"
-                                ]
+                                "value": "evening"
                             }
                         },
                         {
                             "name": {
-                                "value": "early PM",
-                                "synonyms": [
-                                    "early P.M.",
-                                    "early p.m.",
-                                    "early pm"
-                                ]
+                                "value": "afternoon"
                             }
                         },
                         {
                             "name": {
-                                "value": "late AM",
-                                "synonyms": [
-                                    "late A.M.",
-                                    "late a.m.",
-                                    "late am"
-                                ]
+                                "value": "morning"
                             }
                         },
                         {
                             "name": {
-                                "value": "early AM",
-                                "synonyms": [
-                                    "early a.m.",
-                                    "early A.M.",
-                                    "early am"
-                                ]
+                                "value": "night"
                             }
                         }
                     ]
@@ -11748,7 +11742,7 @@
         "dialog": {
             "intents": [
                 {
-                    "name": "recordMedication",
+                    "name": "recordMedicationByName",
                     "confirmationRequired": false,
                     "prompts": {},
                     "slots": [
@@ -11792,7 +11786,7 @@
                     {
                         "type": "PlainText",
                         "value": "Okay, You want me to remember that you took your {medicationName} ?"
-                   }
+                    }
                 ]
             }
         ]

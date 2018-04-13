@@ -20,10 +20,10 @@ ask = Ask(app, '/')
 
 USER_DATA_PATH = "user_data.json"
 
-EARLY_AM_SLOT = "early AM"
-EARLY_PM_SLOT = "early PM"
-LATE_AM_SLOT = "late AM"
-LATE_PM_SLOT = "late PM"
+EARLY_AM_SLOT = "night"
+EARLY_PM_SLOT = "afternoon"
+LATE_AM_SLOT = "morning"
+LATE_PM_SLOT = "evening"
 
 @ask.on_session_started
 def newSession():
@@ -54,9 +54,9 @@ def getUserData(userId):
         return PrescriptionFinder(FakeSpineProxy(), source).getPrescriptions(userId)
 
 def determineTimeSlot(datetime):
-    if datetime.hour in range(0,6):
+    if datetime.hour in range(0,4):
         return EARLY_AM_SLOT
-    elif datetime.hour in range(6,12):
+    elif datetime.hour in range(4,12):
         return LATE_AM_SLOT
     elif datetime.hour in range(12,18):
         return EARLY_PM_SLOT
@@ -131,7 +131,7 @@ def removeMedFromPlan(medicationName, timeSlot):
         userData.removeMedication(timeSlot, medicationName)
         return statement("removed {} from {} slot".format(medicationName, timeSlot))
 
-@ask.intent("recordMedication", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
+@ask.intent("recordMedicationByName", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def recordmeds(medicationName, timeSlot):
     timestamp = datetime.datetime.now()
     takenTime = str(timestamp.strftime("%I:%M %p"))
@@ -159,5 +159,23 @@ def recordmeds(medicationName, timeSlot):
         userData.updateMedication(timeSlot, medicationName, medicationData)
         return statement("I've recorded that you took {} for {} slot".format(medicationName, timeSlot))
 
+@ask.intent("recordMedicationByTimeSlot", convert={"timeSlot": "MedTimeSlot"})
+def recordMedsTimeSlot(timeSlot):
+    if not timeSlot:
+        return question(render_template("ask_for_repeat"))
+    else:
+        timestamp = datetime.datetime.now()
+        timestampString = str(timestamp.strftime("%Y%m%d%H%M%S"))
+        userId = context.System.device.deviceId
+        userData = getUserData(userId)
+        sanitizer = AlexaInputSanitizer()
+        timeSlot = sanitizer.sanitizeInputs(timeSlot)
+        for slot in userData.timeSlots:
+            if slot["name"] == timeSlot:
+                for medication in slot["medications"]:
+                    medication["taken"] = timestampString
+                break
+        userData.updateState()
+        return statement("I've recorded that you took your {} medication.".format(timeSlot))
 if __name__ == '__main__':
     app.run(debug=True)

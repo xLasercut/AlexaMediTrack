@@ -44,20 +44,20 @@ class AlexaInputSanitizer(object):
 
     SANITIZE_DATA = [
         {
-            "synonyms": ["early am", "early a.m.", "early A.M."],
-            "actualValue": "early AM"
+            "synonyms": ["Night"],
+            "actualValue": "night"
         },
         {
-            "synonyms": ["early pm", "early p.m.", "early P.M."],
-            "actualValue": "early PM"
+            "synonyms": ["Afternoon"],
+            "actualValue": "afternoon"
         },
         {
-            "synonyms": ["late am", "late a.m.", "late A.M."],
-            "actualValue": "late AM"
+            "synonyms": ["Morning"],
+            "actualValue": "morning"
         },
         {
-            "synonyms": ["late pm", "late p.m.", "late P.M."],
-            "actualValue": "late PM"
+            "synonyms": ["Evening"],
+            "actualValue": "evening"
         },
         {
             "synonyms": ["others"],
@@ -69,4 +69,4 @@ class AlexaInputSanitizer(object):
         for item in self.SANITIZE_DATA:
             if inputString.strip() in item["synonyms"]:
                 return item["actualValue"]
-        return inputString
+        return inputString.strip()

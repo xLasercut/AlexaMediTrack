@@ -169,8 +169,8 @@ class TimeSlices(object):
             cls.OTHER
         ]
 
-    EARLY_AM = "early AM"
-    LATE_AM = "late AM"
-    EARLY_PM = "early PM"
-    LATE_PM = "late PM"
+    EARLY_AM = "night"
+    LATE_AM = "morning"
+    EARLY_PM = "afternoon"
+    LATE_PM = "evening"
     OTHER = "other"
