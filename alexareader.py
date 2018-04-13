@@ -37,7 +37,7 @@ class UserDataReader(object):
 
         if not medTaken:
             for slot in medNotTaken:
-                medInfoString = render_template('status_yet_to_take', timeslot=getSlotString(slot["name"]))
+                medInfoString = render_template('status_yet_to_take', timeslot=self.getSlotString(slot["name"]))
                 medInfo.append(medInfoString)
                 for medication in slot["medications"]:
                     doseString = self.getDoseString(medication["dose"])
