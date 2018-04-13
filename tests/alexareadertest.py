@@ -1,6 +1,7 @@
 import unittest
 
 from importdata.prescriptions import DailyDosage
+from alexareader import UserDataReader
 
 class TestReadUserData(unittest.TestCase):
 
@@ -49,14 +50,36 @@ class TestReadUserData(unittest.TestCase):
         }]
     }
 
+    EmptyTestSource = {
+        "userId": "3456788934956734",
+        "timeSlots": [{
+            "name": "early am",
+            "medications": []
+        }, {
+            "name": "late am",
+            "medications": []
+        }, {
+            "name": "Early Pm",
+            "medications": []
+        }, {
+            "name": "Late Pm",
+            "medications": []
+        }]
+    }
+
     def test_ReadUserData(self):
         dosage = DailyDosage(self.TestSource, None)
-        timeSlots = dosage.getAllMedicationTaken()
-        self.assertEqual(len(timeSlots), 2)
-        self.assertEqual(len(timeSlots[0]['medications']), 1)
-        self.assertEqual(len(timeSlots[1]['medications']), 2)
+        reader = UserDataReader()
+        result = reader.readCurrentStatus(dosage)
+        self.assertTrue(result)
+        self.assertTrue(result != "Your medications list is empty")
 
-
+    def test_ReadUserDataWhenNoMeds(self):
+        dosage = DailyDosage(self.EmptyTestSource, None)
+        reader = UserDataReader()
+        result = reader.readCurrentStatus(dosage)
+        self.assertTrue(result)
+        self.assertTrue(result == "Your medications list is empty")
 
 if __name__ == '__main__':
     unittest.main()

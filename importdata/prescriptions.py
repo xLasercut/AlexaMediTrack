@@ -23,17 +23,10 @@ class DailyDosage(object):
         for slot in self.timeSlots:
             if slot['name'] == timeslot:
                 for medication in slot["medications"]:
-                    medication['taken'] = datetime.now().strftime("%Y%m%d-%H%M%S")
+                    medication['taken'] = datetime.now().strftime("%Y%m%d%H%M%S")
                 break
 
         self.updateState()
-
-    def hasTaken(self, timeslot):
-        for slot in self.timeSlots:
-            if slot['name'] == timeslot and slot['taken']:
-                return True
-
-        return False
 
     def getAllMedicationTaken(self):
         dosagesTaken = []
