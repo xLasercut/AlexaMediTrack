@@ -41,27 +41,27 @@ class UserDataReader(object):
                 medInfo.append(medInfoString)
                 for medication in slot["medications"]:
                     doseString = self.getDoseString(medication["dose"])
-                    medInfoString = render_template('status_measurement', dose=medication["dose"], dosestring=doseString, medicationname=medication["name"])
+                    medInfoString = render_template('status_measurement', doesnumber=medication["dose"], dosestring=doseString, medicationname=medication["name"])
                     medInfo.append(medInfoString)
         elif not medNotTaken:
             for slot in medTaken:
                 medInfo.append("You have taken {} dose, containing:".format(slot["name"]))
                 for medication in slot["medications"]:
                     oseString = self.getDoseString(medication["dose"])
-                    medInfoString = render_template('status_measurement', dose=medication["dose"], dosestring=doseString, medicationname=medication["name"])
+                    medInfoString = render_template('status_measurement', dosenumber=medication["dose"], dosestring=doseString, medicationname=medication["name"])
                     medInfo.append(medInfoString)
         elif medTaken and medNotTaken:
             for slot in medTaken:
                 medInfo.append("For {} dose, you have taken:".format(slot["name"]))
                 for medication in slot["medications"]:
                     doseString = self.getDoseString(medication["dose"])
-                    medInfoString = render_template('status_measurement', dose=medication["dose"], dosestring=doseString, medicationname=medication["name"])
+                    medInfoString = render_template('status_measurement', dosenumber=medication["dose"], dosestring=doseString, medicationname=medication["name"])
                     medInfo.append(medInfoString)
             for slot in medNotTaken:
                 medInfo.append("For {} dose, you have yet to take:".format(slot["name"]))
                 for medication in slot["medications"]:
                     doseString = self.getDoseString(medication["dose"])
-                    medInfoString = render_template('status_measurement', dose=medication["dose"], dosestring=doseString, medicationname=medication["name"])
+                    medInfoString = render_template('status_measurement', dosenumber=medication["dose"], dosestring=doseString, medicationname=medication["name"])
                     medInfo.append(medInfoString)
         else:
             return render_template('status_empty_list')
