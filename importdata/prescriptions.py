@@ -1,5 +1,5 @@
 from spineproxy import SpineProxy
-from datetime import datetime
+from datetime import datetime, timedelta
 from datasource import UserIdMapping
 
 class DailyDosage(object):
@@ -19,6 +19,32 @@ class DailyDosage(object):
     def userId(self):
         return self.state['userId']
 
+    def _toDateTime(self,stringValue):
+        return datetime.strptime(stringValue, "%Y%m%d%H%M%S")
+
+    def getNextFullDoseTime(self):
+        minNextDosageTime = None
+        for slot in self.timeSlots:
+            for medication in slot['medications']:
+                if medication['taken']:
+                    nextDosageTime = self._toDateTime(medication['taken']) + timedelta(hours=medication['timeBetweenDosages'])
+                    if not minNextDosageTime or nextDosageTime > minNextDosageTime:
+                        minNextDosageTime = nextDosageTime
+
+        return minNextDosageTime
+
+    def hasFullDosesLeft(self):
+        hasDosesLeft = False
+        for slot in self.timeSlots:
+            slotNotTaken = True if slot['medications'] else False
+            for medication in slot['medications']:
+                if medication['taken']:
+                    slotNotTaken = False
+                    break
+            if slotNotTaken:
+                return True
+        return False
+
     def getMedication(self, timeslot, name):
         for slot in self.timeSlots:
             if slot['name'] == timeslot:
@@ -36,6 +62,7 @@ class DailyDosage(object):
                         medication['name'] = updatedData['name']
                         medication['taken'] = updatedData['taken']
                         medication['dose'] = updatedData['dose']
+                        medication['timeBetweenDosages'] = updatedData['timeBetweenDosages']
                         match = True
                         break
                 if not match:
@@ -119,6 +146,7 @@ class PrescriptionFinder(object):
                 slot['medications'].append({
                     'name' : prescription[SpineProxy.NAME_KEY],
                     'dose' : dosagePerSlot,
+                    'timeBetweenDosages' : prescription['timeBetweenDosages'],
                     'taken': None
                 })
 

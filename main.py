@@ -78,6 +78,17 @@ def writeUserData(userData):
 def launched():
     return question(render_template("welcome"))
 
+@ask.intent("nextSlotToTake")
+def medicationTakenInfo():
+    """
+    Returns the next time that a slot full of medication can be taken
+    """
+    userId = context.System.device.deviceId
+    alexaReader = UserDataReader()
+    userData = getUserData(userId)
+
+    return statement(alexaReader.getNextFullDoseTime(userData))
+
 @ask.intent("medTakenInfo")
 def medicationTakenInfo():
     """
@@ -89,8 +100,8 @@ def medicationTakenInfo():
     userData = getUserData(userId)
     return statement(alexaReader.readCurrentStatus(userData))
 
-@ask.intent("addMedToPlan", convert={"dose": int, "medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
-def addMedToPlan(medicationName, dose, timeSlot):
+@ask.intent("addMedToPlan", convert={"dose": int, "medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot", "timeBetweenDosages" : "TimeBetweenDosages"})
+def addMedToPlan(medicationName, dose, timeSlot, timeBetweenDosages):
     """
     Add medication to list
     - if medication already exist on list, then increase the total amount
@@ -102,18 +113,20 @@ def addMedToPlan(medicationName, dose, timeSlot):
         userData = getUserData(userId)
         sanitizer = AlexaInputSanitizer()
         medicationName = sanitizer.sanitizeInputs(medicationName)
+        timeBetweenDosages = sanitizer.sanitizeInputs(timeBetweenDosages)
         timeSlot = sanitizer.sanitizeInputs(timeSlot)
         medicationData = userData.getMedication(timeSlot, medicationName)
         if not medicationData:
             medicationData = {
                 "name": medicationName,
                 "taken": None,
-                "dose": dose
+                "dose": dose,
+                "timeBetweenDosages" : timeBetweenDosages
             }
         else:
             medicationData['dose'] += dose
         userData.updateMedication(timeSlot, medicationName, medicationData)
-        return statement("Added {} {} of {} to {}".format(dose, getDoseString(dose), medicationName, timeSlot))
+        return statement("Added {} {} of {} to {} every {}".format(dose, getDoseString(dose), medicationName, timeSlot, timeBetweenDosages))
 
 @ask.intent("removeMedFromPlan", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def removeMedFromPlan(medicationName, timeSlot):

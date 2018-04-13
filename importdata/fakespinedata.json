@@ -6,12 +6,14 @@
         "name" : "paracetamol",
         "timeSlots" : ["morning", "evening"],
         "dosage" : 1,
+        "timeBetweenDosages" : 4,
         "daysSupply" : 40
       },
       {
         "name" : "vitamin a",
         "timeSlots" : ["afternoon"],
         "dosage" : 2,
+        "timeBetweenDosages" : 4,
         "daysSupply" : 20
       }
     ]
@@ -23,12 +25,14 @@
         "name" : "pine",
         "timeSlots" : ["afternoon"],
         "dosage" : 1,
+        "timeBetweenDosages" : 4,
         "daysSupply" : 28
       },
       {
         "name" : "vitamin c",
         "timeSlots" : ["night"],
         "dosage" : 2,
+        "timeBetweenDosages" : 4,
         "daysSupply" : 40
       }
     ]

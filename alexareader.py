@@ -2,6 +2,16 @@ from importdata.prescriptions import DailyDosage
 
 class UserDataReader(object):
 
+    def getNextFullDoseTime(self, userData):
+        earliestDoseTime = userData.getNextFullDoseTime()
+        if userData.hasFullDosesLeft():
+            if earliestDoseTime:
+                return "You can take your next dose at {}".format(earliestDoseTime.strftime("%H %M"))
+            else:
+                return "You have not taken any doses today yet"
+        else:
+            return "You have taken all your doses for today"
+
     def getDoseString(self, dose):
         if dose > 1:
             return "doses"
