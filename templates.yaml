@@ -1,4 +1,22 @@
 welcome: "Welcome to the alexa medication tracker. \
-For medication information, say: medication taken."
+For a list of commands, say: help. \
+To exit medication tracker, say: stop."
 
-ask_for_repeat: "sorry, I didn't understand. Could you repeat the phrase please."
+help: "For medication information, say: medication info. \
+To add two doses of paracetamol to morning slot, say: add two doses of paracetamol to morning.
+To remove paracetamol from morning slot, say: remove paracetamol from morning. \
+To record taking medication, say: I've had my paracetamol for morning. or, I took my morning pills. \
+To get a list of medications for morning, say: show me my morning medication. or, list my morning medication."
+
+goodbye: "Thank you for using medication tracker. Goodbye."
+
+ask_for_repeat: "I'm sorry, I didn't quite understand. Could you repeat that?"
+
+dosage_added: "Okay, I'll add {{ dosenumber }} {{ dosestring }} of {{ medicationname }} to your {{ timeslot }} medications"
+dosage_removed: "Okay, I'll remove {{ medicationname }} from your {{ timeslot }} medications"
+medication_name_taken: "Okay, I'll record that you've taken a dosage of {{ medicationname }} from your {{ timeslot }} medications"
+medication_timeslot_taken: "Okay, I'll record that you've taken all of your {{ timeslot }} medications"
+
+status_yet_to_take: "For {{timeslot}}, you're still schenduled to take:"
+status_measurement: "{{ dosenumber }} {{ dosestring }} of {{ medicationname }}."
+status_empty_list: "You have no medication scheduled."

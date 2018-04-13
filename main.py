@@ -21,8 +21,8 @@ ask = Ask(app, '/')
 USER_DATA_PATH = "user_data.json"
 
 EARLY_AM_SLOT = "night"
-EARLY_PM_SLOT = "afternoon"
 LATE_AM_SLOT = "morning"
+EARLY_PM_SLOT = "afternoon"
 LATE_PM_SLOT = "evening"
 
 @ask.on_session_started
@@ -126,7 +126,8 @@ def addMedToPlan(medicationName, dose, timeSlot, timeBetweenDosages):
         else:
             medicationData['dose'] += dose
         userData.updateMedication(timeSlot, medicationName, medicationData)
-        return statement("Added {} {} of {} to {} every {}".format(dose, getDoseString(dose), medicationName, timeSlot, timeBetweenDosages))
+        statementText = render_template('dosage_added', dosenumber=dose, dosestring=getDoseString(dose), medicationname=medicationName, timeslot=timeSlot)
+        return statement(statementText)
 
 @ask.intent("removeMedFromPlan", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def removeMedFromPlan(medicationName, timeSlot):
@@ -142,7 +143,9 @@ def removeMedFromPlan(medicationName, timeSlot):
         medicationName = sanitizer.sanitizeInputs(medicationName)
         timeSlot = sanitizer.sanitizeInputs(timeSlot)
         userData.removeMedication(timeSlot, medicationName)
-        return statement("removed {} from {} slot".format(medicationName, timeSlot))
+
+        statementText = render_template('dosage_removed', medicationname=medicationName, timeslot=timeSlot)
+        return statement(statementText)
 
 @ask.intent("recordMedicationByName", convert={"medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
 def recordmeds(medicationName, timeSlot):
@@ -170,10 +173,16 @@ def recordmeds(medicationName, timeSlot):
         else:
             medicationData['taken'] = timestampString
         userData.updateMedication(timeSlot, medicationName, medicationData)
-        return statement("I've recorded that you took {} for {} slot".format(medicationName, timeSlot))
+
+        statementText = render_template('medication_name_taken', medicationname=medicationName, timeslot=timeSlot)
+
+        return statement(statementText)
 
 @ask.intent("recordMedicationByTimeSlot", convert={"timeSlot": "MedTimeSlot"})
 def recordMedsTimeSlot(timeSlot):
+    """
+    Record medication taken for an entire slot
+    """
     if not timeSlot:
         return question(render_template("ask_for_repeat"))
     else:
@@ -189,6 +198,38 @@ def recordMedsTimeSlot(timeSlot):
                     medication["taken"] = timestampString
                 break
         userData.updateState()
-        return statement("I've recorded that you took your {} medication.".format(timeSlot))
+
+        statementText = render_template('medication_time_taken', timeslot=timeSlot)
+
+        return statement(statementText)
+
+@ask.intent("listMedToTakeByTimeSlot", convert={"timeSlot": "MedTimeSlot"})
+def listMedToTakeTimeSlot(timeSlot):
+    if not timeSlot:
+        return question(render_template("ask_for_repeat"))
+    else:
+        userId = context.System.device.deviceId
+        userData = getUserData(userId)
+        sanitizer = AlexaInputSanitizer()
+        timeSlot = sanitizer.sanitizeInputs(timeSlot)
+        medList = userData.getMedicationPerSlot(timeSlot)
+        if medList:
+            msg = "Your {} medication contains: ".format(timeSlot)
+            for medication in medList:
+                msg += "{} {} of {}. ".format(medication["dose"], getDoseString(medication["dose"]), medication["name"])
+            return statement(msg)
+        else:
+            return statement("You don't need to take any medication in the {}".format(timeSlot))
+
+@ask.intent('AMAZON.HelpIntent')
+def help():
+    help_text = render_template('help')
+    return question(help_text)
+
+@ask.intent('AMAZON.StopIntent')
+def exitSession():
+    closeUserSession()
+    return statement(render_template("goodbye"))
+
 if __name__ == '__main__':
     app.run(debug=True)
