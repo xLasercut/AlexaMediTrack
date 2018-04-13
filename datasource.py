@@ -54,4 +54,4 @@ class UserIdMapping(object):
 
     def getNhsNumberFromUserId(self, userId):
         """ TODO ADD LOGIC """
-        return "9999123456"
+        return "9999654322"
