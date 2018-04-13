@@ -213,5 +213,10 @@ def help():
     help_text = render_template('help')
     return question(help_text)
 
+@ask.intent('AMAZON.StopIntent')
+def exitSession():
+    closeUserSession()
+    return statement(render_template("goodbye"))
+
 if __name__ == '__main__':
     app.run(debug=True)

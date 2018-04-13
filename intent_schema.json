@@ -143,6 +143,15 @@
                         "show me medication for {timeSlot}",
                         "list medication for {timeSlot}"
                     ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "goodbye",
+                        "exit",
+                        "cancel",
+                        "stop"
+                    ]
                 }
             ],
             "types": [
