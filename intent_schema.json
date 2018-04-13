@@ -96,18 +96,12 @@
                         }
                     ],
                     "samples": [
+                        "delete {medicationName} from {timeSlot} slot",
+                        "remove {medicationName} from {timeSlot} slot",
+                        "delete {timeSlot} {medicationName}",
+                        "remove {timeSlot} {medicationName}",
+                        "delete {medicationName} from {timeSlot}",
                         "remove {medicationName} from {timeSlot}"
-                    ]
-                },
-                {
-                    "name": "listMedFromPlan",
-                    "slots": [],
-                    "samples": [
-                        "my med list",
-                        "my medication list",
-                        "show me meds list",
-                        "show me medication list",
-                        "show me med list"
                     ]
                 },
                 {
@@ -119,6 +113,11 @@
                         }
                     ],
                     "samples": [
+                        "record that I took mu {timeSlot} medication",
+                        "record that I had my {timeSlot} meds",
+                        "I had my {timeSlot} meds",
+                        "I took {timeSlot} medication",
+                        "I've taken my {timeSlot} pills",
                         "record that I've had {timeSlot} medicine",
                         "record that I had my {timeSlot} pills",
                         "record that I took my {timeSlot} pills"
