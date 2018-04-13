@@ -132,6 +132,9 @@
                         }
                     ],
                     "samples": [
+                        "list {timeSlot} meds",
+                        "list my {timeSlot} medication",
+                        "list {timeSlot} medication",
                         "what do I need to take in the {timeSlot}",
                         "what do I need to take for {timeSlot}",
                         "tell me the medication for {timeSlot}",
