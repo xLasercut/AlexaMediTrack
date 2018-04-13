@@ -22,6 +22,8 @@ class UserDataReader(object):
     def getSlotString(self, slot):
         if slot == "night":
             return "tonight"
+        elif slot == "other":
+            return "your other medication"
         else:
             return "this {}".format(slot)
 
