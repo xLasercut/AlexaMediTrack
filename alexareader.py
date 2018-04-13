@@ -41,7 +41,7 @@ class UserDataReader(object):
                 medInfo.append(medInfoString)
                 for medication in slot["medications"]:
                     doseString = self.getDoseString(medication["dose"])
-                    medInfoString = render_template('status_measurement', doesnumber=medication["dose"], dosestring=doseString, medicationname=medication["name"])
+                    medInfoString = render_template('status_measurement', dosenumber=medication["dose"], dosestring=doseString, medicationname=medication["name"])
                     medInfo.append(medInfoString)
         elif not medNotTaken:
             for slot in medTaken:
