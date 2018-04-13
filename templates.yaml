@@ -16,3 +16,7 @@ dosage_added: "Okay, I'll add {{ dosenumber }} {{ dosestring }} of {{ medication
 dosage_removed: "Okay, I'll remove {{ medicationname }} from your {{ timeslot }} medications"
 medication_name_taken: "Okay, I'll record that you've taken a dosage of {{ medicationname }} from your {{ timeslot }} medications"
 medication_timeslot_taken: "Okay, I'll record that you've taken all of your {{ timeslot }} medications"
+
+status_yet_to_take: "For {{timeslot}}, you're still schenduled to take:"
+status_measurement: "{{ dosenumber }} {{ dosestring }} of {{ medicationname }}."
+status_empty_list: "You have no medication scheduled."

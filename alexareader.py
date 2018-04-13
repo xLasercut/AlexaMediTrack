@@ -1,3 +1,4 @@
+from flask import render_template
 from importdata.prescriptions import DailyDosage
 
 class UserDataReader(object):
@@ -7,6 +8,12 @@ class UserDataReader(object):
             return "doses"
         else:
             return "dose"
+
+    def getSlotString(self, slot):
+        if slot == "night":
+            return "tonight"
+        else:
+            return "this {}".format(slot)
 
     def readCurrentStatus(self, userData):
         medInfo = []
@@ -18,27 +25,36 @@ class UserDataReader(object):
 
         if not medTaken:
             for slot in medNotTaken:
-                medInfo.append("You have yet to take {} dose, containing:".format(slot["name"]))
+                medInfoString = render_template'(status_yet_to_take', timeslot=getSlotString(slot["name"]))
+                medInfo.append(medInfoString)
                 for medication in slot["medications"]:
-                    medInfo.append("{} {} of {}.".format(medication["dose"], self.getDoseString(medication["dose"]), medication["name"]))
+                    doseString = self.getDoseString(medication["dose"])          
+                    medInfoString = render_template('status_measurement', dose=medication["dose"], dosestring=doseString, medicationname=medication["name"])
+                    medInfo.append(medInfoString)
         elif not medNotTaken:
             for slot in medTaken:
                 medInfo.append("You have taken {} dose, containing:".format(slot["name"]))
                 for medication in slot["medications"]:
-                    medInfo.append("{} {} of {}.".format(medication["dose"], self.getDoseString(medication["dose"]), medication["name"]))
+                    oseString = self.getDoseString(medication["dose"])          
+                    medInfoString = render_template('status_measurement', dose=medication["dose"], dosestring=doseString, medicationname=medication["name"])
+                    medInfo.append(medInfoString)
         elif medTaken and medNotTaken:
             for slot in medTaken:
                 medInfo.append("For {} dose, you have taken:".format(slot["name"]))
                 for medication in slot["medications"]:
-                    medInfo.append("{} {} of {}.".format(medication["dose"], self.getDoseString(medication["dose"]), medication["name"]))
+                    doseString = self.getDoseString(medication["dose"])          
+                    medInfoString = render_template('status_measurement', dose=medication["dose"], dosestring=doseString, medicationname=medication["name"])
+                    medInfo.append(medInfoString)
             for slot in medNotTaken:
                 medInfo.append("For {} dose, you have yet to take:".format(slot["name"]))
                 for medication in slot["medications"]:
-                    medInfo.append("{} {} of {}.".format(medication["dose"], self.getDoseString(medication["dose"]), medication["name"]))
+                    doseString = self.getDoseString(medication["dose"])          
+                    medInfoString = render_template('status_measurement', dose=medication["dose"], dosestring=doseString, medicationname=medication["name"])
+                    medInfo.append(medInfoString)
         else:
-            return "Your medication list is empty"
+            return render_template('status_empty_list')
 
-        return " ".join(medInfo)
+        return "".join(medInfo)
 
 class AlexaInputSanitizer(object):
 
