@@ -10,19 +10,6 @@
                     ]
                 },
                 {
-                    "name": "nextSlotToTake",
-                    "slots": [],
-                    "samples": [
-                        "when can I take my next full dose ",
-                        "when can I take my next dose ",
-                        "next full dose",
-                        "when can I next take my medication",
-                        "when can I next take my meds",
-                        "when next meds",
-                        "when next medication"
-                    ]
-                },
-                {
                     "name": "medTakenInfo",
                     "slots": [],
                     "samples": [
@@ -87,21 +74,15 @@
                         {
                             "name": "timeSlot",
                             "type": "MedTimeSlot"
-                        },
-                        {
-                            "name": "timeBetweenDosages",
-                            "type": "AMAZON.NUMBER"
                         }
                     ],
                     "samples": [
-                        "add {dose} doses of {medicationName} to {timeSlot} every {timeBetweenDosages} hours",
-                        "Add a {dose} of {medicationName} to {timeSlot} every {timeBetweenDosages} hours",
-                        "add {dose} of {medicationName} to {timeSlot} every {timeBetweenDosages} hours",
-                        "add {dose} dose of {medicationName} to {timeSlot} every {timeBetweenDosages} hours",
-                        "add {dose} doses of {medicationName} to {timeSlot} every {timeBetweenDosages} hour",
-                        "Add a {dose} of {medicationName} to {timeSlot} every {timeBetweenDosages} hour",
-                        "add {dose} of {medicationName} to {timeSlot} every {timeBetweenDosages} hour",
-                        "add {dose} dose of {medicationName} to {timeSlot} every {timeBetweenDosages} hour"
+                        "add {dose} of {medicationName} to {timeSlot} slot",
+                        "add {dose} doses of {medicationName} to {timeSlot}",
+                        "Add a {dose} of {medicationName} to {timeSlot}",
+                        "add {dose} of {medicationName} to {timeSlot} ",
+                        "add {dose} dose of {medicationName} to {timeSlot} ",
+                        "add {dose} dose of {medicationName} to {timeSlot}  slot"
                     ]
                 },
                 {

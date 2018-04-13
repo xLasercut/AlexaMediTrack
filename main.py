@@ -78,17 +78,6 @@ def writeUserData(userData):
 def launched():
     return question(render_template("welcome"))
 
-@ask.intent("nextSlotToTake")
-def medicationTakenInfo():
-    """
-    Returns the next time that a slot full of medication can be taken
-    """
-    userId = context.System.device.deviceId
-    alexaReader = UserDataReader()
-    userData = getUserData(userId)
-
-    return statement(alexaReader.getNextFullDoseTime(userData))
-
 @ask.intent("medTakenInfo")
 def medicationTakenInfo():
     """
@@ -100,8 +89,8 @@ def medicationTakenInfo():
     userData = getUserData(userId)
     return statement(alexaReader.readCurrentStatus(userData))
 
-@ask.intent("addMedToPlan", convert={"dose": int, "medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot", "timeBetweenDosages" : "TimeBetweenDosages"})
-def addMedToPlan(medicationName, dose, timeSlot, timeBetweenDosages):
+@ask.intent("addMedToPlan", convert={"dose": int, "medicationName": "MedicationNameSlot", "timeSlot": "MedTimeSlot"})
+def addMedToPlan(medicationName, dose, timeSlot):
     """
     Add medication to list
     - if medication already exist on list, then increase the total amount
@@ -120,8 +109,7 @@ def addMedToPlan(medicationName, dose, timeSlot, timeBetweenDosages):
             medicationData = {
                 "name": medicationName,
                 "taken": None,
-                "dose": dose,
-                "timeBetweenDosages" : timeBetweenDosages
+                "dose": dose
             }
         else:
             medicationData['dose'] += dose
