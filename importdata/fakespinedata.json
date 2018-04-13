@@ -39,6 +39,14 @@
   },
   "9999654322" :
   {
-    "medications" : []
+    "medications" : [
+      {
+        "name": "pine",
+        "timeSlots": ["morning", "afternoon", "evening", "night"],
+        "dosage": 0,
+        "timeBetweenDosages": 4,
+        "daysSupply": 28
+      }
+    ]
   }
 }
