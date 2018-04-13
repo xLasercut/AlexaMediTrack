@@ -50,7 +50,14 @@
                         "Record that I took {medicationName}",
                         "Record that I took {medicationName} for {timeSlot}",
                         "Record that I've taken my {timeSlot} {medicationName} ",
-                        "Record that I've had my {timeSlot} {medicationName}"
+                        "Record that I've had my {timeSlot} {medicationName}",
+                        "I've had {medicationName}",
+                        "I just had {medicationName}",
+                        "I've taken {medicationName}",
+                        "I took {medicationName}",
+                        "I took {medicationName} for {timeSlot}",
+                        "I've taken my {timeSlot} {medicationName} ",
+                        "I've had my {timeSlot} {medicationName}"
                     ]
                 },
                 {
