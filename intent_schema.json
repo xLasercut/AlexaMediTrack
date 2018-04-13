@@ -13,41 +13,51 @@
                     "name": "medTakenInfo",
                     "slots": [],
                     "samples": [
+                        "what medications did i take ",
+                        "what have i taken",
+                        "which meds did I take",
+                        "what medicines have I had",
+                        "what medications have I taken",
+                        "medication information",
+                        "medication info",
+                        "med info",
                         "medication taken",
                         "meds taken",
                         "med taken"
                     ]
                 },
                 {
-                    "name": "trackerSetup",
-                    "slots": [],
-                    "samples": [
-                        "setup tracker",
-                        "tracker setup"
-                    ]
-                },
-                {
-                    "name": "recordMedication",
+                    "name": "recordMedicationByName",
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "medicationName",
                             "type": "MedicationNameSlot",
                             "samples": [
-                                "I had {MedicationName}",
-                                "I took my {MedicationName}",
-                                "{MedicationName}"
+                                "I had {medicationName}",
+                                "I took my {medicationName}",
+                                "{medicationName}"
                             ]
                         },
                         {
-                            "name": "MedicationTimeframe",
-                            "type": "AMAZON.TIME"
+                            "name": "timeSlot",
+                            "type": "MedTimeSlot"
                         }
                     ],
                     "samples": [
-                        "Record that I took {MedicationName}",
-                        "Record that I took {MedicationName} for {MedicationTimeframe}",
-                        "Record that I've taken my {MedicationTimeframe} {MedicationName} ",
-                        "Record that I've had my {MedicationTimeframe} {MedicationName}"
+                        "Record that I've had {medicationName}",
+                        "Record that I just had {medicationName}",
+                        "Record that I've taken {medicationName}",
+                        "Record that I took {medicationName}",
+                        "Record that I took {medicationName} for {timeSlot}",
+                        "Record that I've taken my {timeSlot} {medicationName} ",
+                        "Record that I've had my {timeSlot} {medicationName}",
+                        "I've had {medicationName}",
+                        "I just had {medicationName}",
+                        "I've taken {medicationName}",
+                        "I took {medicationName}",
+                        "I took {medicationName} for {timeSlot}",
+                        "I've taken my {timeSlot} {medicationName} ",
+                        "I've had my {timeSlot} {medicationName}"
                     ]
                 },
                 {
@@ -67,6 +77,8 @@
                         }
                     ],
                     "samples": [
+                        "add {dose} doses of {medicationName} to {timeSlot}",
+                        "Add a {dose} of {medicationName} to {timeSlot}",
                         "add {dose} of {medicationName} to {timeSlot}",
                         "add {dose} dose of {medicationName} to {timeSlot}"
                     ]
@@ -84,26 +96,38 @@
                         }
                     ],
                     "samples": [
+                        "delete {medicationName} from {timeSlot} slot",
+                        "remove {medicationName} from {timeSlot} slot",
+                        "delete {timeSlot} {medicationName}",
+                        "remove {timeSlot} {medicationName}",
+                        "delete {medicationName} from {timeSlot}",
                         "remove {medicationName} from {timeSlot}"
                     ]
                 },
                 {
-                    "name": "listMedFromPlan",
-                    "slots": [],
+                    "name": "recordMedicationByTimeSlot",
+                    "slots": [
+                        {
+                            "name": "timeSlot",
+                            "type": "MedTimeSlot"
+                        }
+                    ],
                     "samples": [
-                        "my med list",
-                        "my medication list",
-                        "show me meds list",
-                        "show me medication list",
-                        "show me med list"
+                        "record that I took mu {timeSlot} medication",
+                        "record that I had my {timeSlot} meds",
+                        "I had my {timeSlot} meds",
+                        "I took {timeSlot} medication",
+                        "I've taken my {timeSlot} pills",
+                        "record that I've had {timeSlot} medicine",
+                        "record that I had my {timeSlot} pills",
+                        "record that I took my {timeSlot} pills"
                     ]
                 }
             ],
             "types": [
                 {
                     "name": "MedicationNameSlot",
-                    "values":
-                    [
+                    "values": [
                         {
                             "name": {
                                 "value": "Abacavir"
@@ -11685,34 +11709,36 @@
                             }
                         }
                     ]
-
                 },
                 {
                     "name": "MedTimeSlot",
                     "values": [
                         {
                             "name": {
-                                "value": "other"
+                                "value": "other",
+                                "synonyms": [
+                                    "others"
+                                ]
                             }
                         },
                         {
                             "name": {
-                                "value": "late pm"
+                                "value": "evening"
                             }
                         },
                         {
                             "name": {
-                                "value": "early pm"
+                                "value": "afternoon"
                             }
                         },
                         {
                             "name": {
-                                "value": "late am"
+                                "value": "morning"
                             }
                         },
                         {
                             "name": {
-                                "value": "early am"
+                                "value": "night"
                             }
                         }
                     ]
@@ -11722,14 +11748,12 @@
         "dialog": {
             "intents": [
                 {
-                    "name": "recordMedication",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent.1036009112315"
-                    },
+                    "name": "recordMedicationByName",
+                    "confirmationRequired": false,
+                    "prompts": {},
                     "slots": [
                         {
-                            "name": "MedicationName",
+                            "name": "medicationName",
                             "type": "MedicationNameSlot",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
@@ -11738,8 +11762,8 @@
                             }
                         },
                         {
-                            "name": "MedicationTimeframe",
-                            "type": "AMAZON.TIME",
+                            "name": "timeSlot",
+                            "type": "MedTimeSlot",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
@@ -11763,11 +11787,11 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Okay, You want me to record that you took your {MedicationTimeframe} {MedicationName} ?"
+                        "value": "Okay, You want me to record that you took your {timeSlot} {medicationName} ?"
                     },
                     {
                         "type": "PlainText",
-                        "value": "Okay, You want me to remember that you took your {MedicationName} ?"
+                        "value": "Okay, You want me to remember that you took your {medicationName} ?"
                     }
                 ]
             }

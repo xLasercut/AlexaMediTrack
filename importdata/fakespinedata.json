@@ -3,25 +3,16 @@
   {
     "medications" : [
       {
-        "name" : "dried frog pills",
-        "dailyDosage" : 4,
-        "interval" : 4,
+        "name" : "paracetamol",
+        "timeSlots" : ["morning", "evening"],
         "dosage" : 1,
         "daysSupply" : 40
       },
       {
-        "name" : "Aufero capitis",
-        "dailyDosage" : 4,
-        "interval" : 2,
-        "dosage" : 1,
+        "name" : "vitamin a",
+        "timeSlots" : ["afternoon"],
+        "dosage" : 2,
         "daysSupply" : 20
-      },
-      {
-        "name" : "illum turgentis sanie caput remedium",
-        "dailyDosage" : 1,
-        "interval" : 8,
-        "dosage" : 1,
-        "daysSupply" : 14
       }
     ]
   },
@@ -29,16 +20,14 @@
   {
     "medications" : [
       {
-        "name" : "Aufero capitis",
-        "dailyDosage" : 4,
-        "interval" : 2,
+        "name" : "pine",
+        "timeSlots" : ["afternoon"],
         "dosage" : 1,
         "daysSupply" : 28
       },
       {
-        "name" : "nolite sternumenta",
-        "dailyDosage" : 8,
-        "interval" : 4,
+        "name" : "vitamin c",
+        "timeSlots" : ["night"],
         "dosage" : 2,
         "daysSupply" : 40
       }

@@ -2,6 +2,7 @@ import os
 import json
 
 class SpineProxy(object):
+    SLOTS_KEY = "timeSlots"
     DOSAGE_KEY = "dosage"
     COURSE_KEY = "course"
     NAME_KEY = "name"

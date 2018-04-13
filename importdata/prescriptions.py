@@ -19,19 +19,47 @@ class DailyDosage(object):
     def userId(self):
         return self.state['userId']
 
-    def takeMedication(self, timeslot):
+    def getMedication(self, timeslot, name):
         for slot in self.timeSlots:
             if slot['name'] == timeslot:
-                for medication in slot["medications"]:
-                    medication['taken'] = datetime.now().strftime("%Y%m%d%H%M%S")
+                for medication in slot['medications']:
+                    if medication['name'] == name:
+                        return medication
+                return None
+
+    def updateMedication(self, timeslot, name, updatedData):
+        for slot in self.timeSlots:
+            if slot['name'] == timeslot:
+                match = False
+                for medication in slot['medications']:
+                    if medication['name'] == name:
+                        medication['name'] = updatedData['name']
+                        medication['taken'] = updatedData['taken']
+                        medication['dose'] = updatedData['dose']
+                        match = True
+                        break
+                if not match:
+                    slot['medications'].append(updatedData)
+                self.updateState()
                 break
 
-        self.updateState()
+    def removeMedication(self, timeslot, name):
+        for slot in self.timeSlots:
+            if slot['name'] == timeslot:
+                for i in range(0, len(slot["medications"])):
+                    if slot["medications"][i]["name"] == name:
+                        del slot["medications"][i]
+                        self.updateState()
+                        break
+                break
 
     def getAllMedicationTaken(self):
         dosagesTaken = []
         for slot in self.timeSlots:
-            takenSlot = {'name' : slot['name'], 'medications' :[] }
+            takenSlot = {
+                'name' : slot['name'],
+                'medications' :[]
+            }
             for medication in slot['medications']:
                 if medication['taken']:
                     takenSlot['medications'].append(medication)
@@ -44,7 +72,10 @@ class DailyDosage(object):
     def getAllMedicationNotTaken(self):
         dosagesTaken = []
         for slot in self.timeSlots:
-            notTakenSlot = {'name' : slot['name'], 'medications' :[] }
+            notTakenSlot = {
+                'name' : slot['name'],
+                'medications' :[]
+            }
             for medication in slot['medications']:
                 if not medication['taken']:
                     notTakenSlot['medications'].append(medication)
@@ -81,14 +112,15 @@ class PrescriptionFinder(object):
         return dailyDosagePlan
 
     def _addDosage(self, prescription, timeSlots):
-        dailyDosage = prescription[SpineProxy.DOSAGE_KEY]
-        distibution = self._getDistribution(dailyDosage, len(timeSlots))
-        for i, dosage in enumerate(distibution):
-            timeSlots[i]['medications'].append({
-                'name' : prescription[SpineProxy.NAME_KEY],
-                'dose' : dosage,
-                'taken': None
-            })
+        dosagePerSlot = prescription[SpineProxy.DOSAGE_KEY]
+        doseSlots = prescription[SpineProxy.SLOTS_KEY]
+        for slot in timeSlots:
+            if slot['name'] in doseSlots and dosagePerSlot > 0:
+                slot['medications'].append({
+                    'name' : prescription[SpineProxy.NAME_KEY],
+                    'dose' : dosagePerSlot,
+                    'taken': None
+                })
 
     def _getTimeSlots(self):
         slotNames = TimeSlices.getFourSlots()
@@ -120,15 +152,15 @@ class TimeSlices(object):
     @classmethod
     def getFourSlots(cls):
         return [
-            cls.EARLY_AM,
             cls.LATE_AM,
             cls.EARLY_PM,
             cls.LATE_PM,
+            cls.EARLY_AM,
             cls.OTHER
         ]
 
-    EARLY_AM = "early am"
-    LATE_AM = "late am"
-    EARLY_PM = "early pm"
-    LATE_PM = "late pm"
+    EARLY_AM = "night"
+    LATE_AM = "morning"
+    EARLY_PM = "afternoon"
+    LATE_PM = "evening"
     OTHER = "other"

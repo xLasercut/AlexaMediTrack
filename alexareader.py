@@ -2,35 +2,71 @@ from importdata.prescriptions import DailyDosage
 
 class UserDataReader(object):
 
+    def getDoseString(self, dose):
+        if dose > 1:
+            return "doses"
+        else:
+            return "dose"
+
     def readCurrentStatus(self, userData):
         medInfo = []
+        medTaken = userData.getAllMedicationTaken()
+        medNotTaken = userData.getAllMedicationNotTaken()
 
-        for slot in userData.timeSlots:
-            if len(slot["medications"]) > 0:
-                slotInfo = {
-                    "timeSlot": slot["name"],
-                    "taken": [],
-                    "notTaken": []
-                }
+        print medTaken
+        print medNotTaken
+
+        if not medTaken:
+            for slot in medNotTaken:
+                medInfo.append("You have yet to take {} dose, containing:".format(slot["name"]))
                 for medication in slot["medications"]:
-                    if medication["taken"] != "None":
-                        slotInfo["taken"].append("%i of %s." % (medication["dose"], medication["name"]))
-                    else:
-                        slotInfo["notTaken"].append("%i of %s." % (medication["dose"], medication["name"]))
-                medInfo.append(slotInfo)
-
-        if len(medInfo) > 0:
-            msgOut = []
-            for item in medInfo:
-                if len(item["notTaken"]) == 0:
-                    msgOut.append(
-                        "You have taken your %s dose, containing: %s" % (item["timeSlot"], " ".join(item["taken"])))
-                elif len(item["taken"]) == 0:
-                    msgOut.append("You have yet to take your %s dose, containing: %s" % (
-                    item["timeSlot"], " ".join(item["notTaken"])))
-                else:
-                    msgOut.append("For your %s dose, you have taken: %s you have yet to take: %s." % (
-                    item["timeSlot"], " ".join(item["taken"]), " ".join(item["notTaken"])))
-            return " ".join(msgOut)
+                    medInfo.append("{} {} of {}.".format(medication["dose"], self.getDoseString(medication["dose"]), medication["name"]))
+        elif not medNotTaken:
+            for slot in medTaken:
+                medInfo.append("You have taken {} dose, containing:".format(slot["name"]))
+                for medication in slot["medications"]:
+                    medInfo.append("{} {} of {}.".format(medication["dose"], self.getDoseString(medication["dose"]), medication["name"]))
+        elif medTaken and medNotTaken:
+            for slot in medTaken:
+                medInfo.append("For {} dose, you have taken:".format(slot["name"]))
+                for medication in slot["medications"]:
+                    medInfo.append("{} {} of {}.".format(medication["dose"], self.getDoseString(medication["dose"]), medication["name"]))
+            for slot in medNotTaken:
+                medInfo.append("For {} dose, you have yet to take:".format(slot["name"]))
+                for medication in slot["medications"]:
+                    medInfo.append("{} {} of {}.".format(medication["dose"], self.getDoseString(medication["dose"]), medication["name"]))
         else:
-            return "Your medications list is empty"
+            return "Your medication list is empty"
+
+        return " ".join(medInfo)
+
+class AlexaInputSanitizer(object):
+
+    SANITIZE_DATA = [
+        {
+            "synonyms": ["Night"],
+            "actualValue": "night"
+        },
+        {
+            "synonyms": ["Afternoon"],
+            "actualValue": "afternoon"
+        },
+        {
+            "synonyms": ["Morning"],
+            "actualValue": "morning"
+        },
+        {
+            "synonyms": ["Evening"],
+            "actualValue": "evening"
+        },
+        {
+            "synonyms": ["others"],
+            "actualValue": "other"
+        }
+    ]
+
+    def sanitizeInputs(self, inputString):
+        for item in self.SANITIZE_DATA:
+            if inputString.strip() in item["synonyms"]:
+                return item["actualValue"]
+        return inputString.lower().strip()
